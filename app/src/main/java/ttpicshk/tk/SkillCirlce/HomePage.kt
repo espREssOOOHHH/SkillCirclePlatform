@@ -37,7 +37,7 @@ class HomePage:AppCompatActivity() {
             true
         }
 
-        binding.pagerLayout.adapter=
+        binding.pagerLayout.adapter
     }
 
     //codes about menu button
