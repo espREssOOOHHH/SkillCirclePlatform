@@ -1,0 +1,53 @@
+30004 验证码发送失败
+30001 用户请求验证码过快
+30005 验证码发送成功
+
+20001 该用户已被禁用
+20000 昵称/邮箱/手机号错误
+20002 密码错误
+20003 未获取到token
+20004 登陆过期，token无效不合法
+20005 提示绑定手机
+
+10001 缓存函数异常
+10000 上传图片异常
+
+tp5.0 在 PHP7.4 修改/public/thinkphp/library/think/db/Query.php 400 {}->[]
+
+ #RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+ RewriteRule ^(.*)$ index.php [L,E=PATH_INFO:$1]
+ 多级控制器访问修改url映射 (public下的.htaccess)
+
+引导加载配置文件、回去参数 5.0
+\think\Config::load(APP_PATH.'../conf/config.php');
+ \think\Config::get('aliSMS.expire')
+ 5.1
+ use \think\facade\Config;
+ Config::get();
+
+ 模型关联 以及级联新增
+  $user->userinfo()->save([ 'user_id'=>$user->id ]);
+
+  md5 可逆加密
+  password_hash()  crypt()非对称加密
+
+  http_response_code() expects parameter 1 to be int, array given
+  返回状态码传参错误
+
+  第三方登陆时：
+  首次第三方登陆user_id（初始默认为0，进行与用户相关操作即提示绑定手机号码，创建user信息）与主表id关联（user_bind）
+  不同第三方user_id同一个user避免多个第三方产生不同user信息
+  同时禁用第三方登录不影响主表登录
+
+  Cache::pull获取并清除缓存
+
+  模型名与数据库表名对应可以关联（A_B->ab）
+
+  文件上传下载注意封装URL
+  20160820/42a79759f284b767dfcb2a0197904287.jpg （tp5.1默认上传文件URL）
+
+  通过URL函数封装完整域名
+  Url::build('index/blog/read', 'id=5&name=thinkphp');
+Url::build('index/blog/read', ['id' => 5, 'name' => 'thinkphp']);
+url('index/blog/read', 'id=5&name=thinkphp');
+url('index/blog/read', ['id' => 5, 'name' => 'thinkphp']);
