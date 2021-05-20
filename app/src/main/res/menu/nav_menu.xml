@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single">
+    <item
+        android:id="@+id/nav_homePage"
+        android:icon="@drawable/icon_model"
+        android:title="HomePage"/>
+    <item
+        android:id="@+id/nav_Room"
+        android:icon="@drawable/icon_room"
+        android:title="Room"/>
+    <item
+        android:id="@+id/nav_WorkManager"
+        android:icon="@drawable/nav_friends"
+        android:title="WorkManager"/>
+
+
+</group>
+</menu>
