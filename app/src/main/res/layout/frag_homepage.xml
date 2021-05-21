@@ -13,6 +13,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/nestScrollViewFrags"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +42,21 @@
 
     </androidx.core.widget.NestedScrollView>
 
-
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab_frags"
+        android:layout_gravity="top|center_horizontal"
+        android:background="@color/fabBackground"
+        android:backgroundTint="@color/fabBackground"
+        app:rippleColor="@color/fabBackground"
+        android:visibility="gone"
+        app:borderWidth="0dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/top"
+        app:elevation="0dp"/>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

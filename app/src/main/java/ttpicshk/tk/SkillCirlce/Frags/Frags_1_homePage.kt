@@ -2,14 +2,19 @@ package ttpicshk.tk.SkillCirlce.Frags
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.UiThread
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import ttpicshk.tk.SkillCirlce.AllApplication
 import ttpicshk.tk.SkillCirlce.Article
@@ -43,6 +48,32 @@ class Frags_1_homePage:Fragment() {
                 .setAction("Got it"){}
                 .show()
         }
+
+        //下滑按钮
+        val nestedScrollView=fragmentView.findViewById<NestedScrollView>(R.id.nestScrollViewFrags)
+        val fab=fragmentView.findViewById<FloatingActionButton>(R.id.fab_frags)
+        fab.setOnClickListener {
+            nestedScrollView.smoothScrollTo(0,0)
+        }
+
+        nestedScrollView.setOnScrollChangeListener(
+            NestedScrollView.OnScrollChangeListener
+            { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                if(scrollY>oldScrollY){//down
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        fab.visibility=View.GONE
+                    },2000)
+                }
+                if(scrollY<oldScrollY){//up
+                    fab.visibility=View.VISIBLE
+                }
+                else
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        fab.visibility=View.GONE
+                    },2000)
+
+            })
+
         return fragmentView
     }
 

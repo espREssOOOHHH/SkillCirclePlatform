@@ -49,10 +49,11 @@ class HomePage:AppCompatActivity() {
         //fragmentManager and TabLayout
         val adapterFrag=Adapter_frags_homePage(supportFragmentManager,lifecycle)
         adapterFrag.addFrag(Frags_1_homePage())
-        adapterFrag.addFrag(Frags_2_homePage())
+        adapterFrag.addFrag(Frags_1_homePage())
         binding.pagerLayout.adapter=adapterFrag
         TabLayoutMediator(binding.tabLayout,binding.pagerLayout){tab,position->
             tab.text="OBJECT ${(position+1)}"
+            tab.setIcon(R.drawable.icon_model)
         }.attach()
         binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
