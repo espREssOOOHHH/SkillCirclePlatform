@@ -4,84 +4,95 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.UiThread
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import ttpicshk.tk.SkillCirlce.AllApplication
-import ttpicshk.tk.SkillCirlce.Article
-import ttpicshk.tk.SkillCirlce.ArticleAdapter
-import ttpicshk.tk.SkillCirlce.R
+import ttpicshk.tk.SkillCirlce.*
+import ttpicshk.tk.SkillCirlce.databinding.FragHomepageBinding
+import kotlin.concurrent.thread
 
-class Frags_1_homePage:Fragment() {
+class Frags_1_homePage(var idFrag:Int):Fragment() {
 
-    val article= mutableListOf(Article("fudk","skdfjshfk",R.drawable.nav_location),
-    Article("dskjfh","sdkfjhs",R.drawable.ic_backup)
+    private lateinit var viewModel:MainViewModel
+    val article= mutableListOf(Article("hello","skdfjshfk",R.drawable.grape),
+    Article("duck","sdkfjhs",R.drawable.apple),
+    Article("cherry","djfshkfd",R.drawable.cherry)
     )
     val articleList=ArrayList<Article>()
-
+    lateinit var binding:FragHomepageBinding
     @SuppressLint("ResourceAsColor")
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        var fragmentView = inflater.inflate(R.layout.frag_homepage, container, false)
-        initArticle()
-        val recyclerView=fragmentView.findViewById<RecyclerView>(R.id.recyclerViewFrags)
-        recyclerView.layoutManager=GridLayoutManager(this.activity,2)
-        val adapter=ArticleAdapter(AllApplication.context,articleList)
-        recyclerView.adapter=adapter
+        viewModel= ViewModelProvider(this)[MainViewModel::class.java]
+        binding= FragHomepageBinding.inflate(layoutInflater)
 
-        val swipeRefresh=fragmentView.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshFrag)
-        swipeRefresh?.setColorSchemeColors(R.color.design_default_color_primary_dark)
-        swipeRefresh?.setOnRefreshListener {
-            Snackbar.make(fragmentView,"Refreshed",Snackbar.LENGTH_SHORT)
-                .setAction("Got it"){}
-                .show()
+        initArticle()
+
+        binding.recyclerViewFrags.layoutManager=GridLayoutManager(this.activity,2)
+        val adapter=ArticleAdapter(AllApplication.context,viewModel.articleList1)
+        binding.recyclerViewFrags.adapter=adapter
+
+        binding.swipeRefreshFrag.setColorSchemeColors(R.color.design_default_color_primary_dark)
+        binding.swipeRefreshFrag.setOnRefreshListener {
+            refreshArticle(adapter)
         }
 
         //下滑按钮
-        val nestedScrollView=fragmentView.findViewById<NestedScrollView>(R.id.nestScrollViewFrags)
-        val fab=fragmentView.findViewById<FloatingActionButton>(R.id.fab_frags)
-        fab.setOnClickListener {
-            nestedScrollView.smoothScrollTo(0,0)
+        binding.fabFrags.setOnClickListener {
+            binding.nestScrollViewFrags.smoothScrollTo(0,0)
         }
 
-        nestedScrollView.setOnScrollChangeListener(
+        binding.nestScrollViewFrags.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener
             { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                 if(scrollY>oldScrollY){//down
                     Handler(Looper.getMainLooper()).postDelayed({
-                        fab.visibility=View.GONE
+                        binding.fabFrags.visibility=View.GONE
                     },2000)
                 }
                 if(scrollY<oldScrollY){//up
-                    fab.visibility=View.VISIBLE
+                    binding.fabFrags.visibility=View.VISIBLE
                 }
                 else
                     Handler(Looper.getMainLooper()).postDelayed({
-                        fab.visibility=View.GONE
+                        binding.fabFrags.visibility=View.GONE
                     },2000)
 
             })
 
-        return fragmentView
+        return binding.root
+    }
+
+    private fun refreshArticle(adapter: ArticleAdapter){
+        thread {
+            Thread.sleep(1000)
+            activity!!.runOnUiThread{
+                Snackbar.make(binding.fabFrags,"Refreshed",Snackbar.LENGTH_SHORT)
+                    .setAction("Got it"){}
+                    .show()
+                initArticle()
+                adapter.notifyDataSetChanged()
+                binding.swipeRefreshFrag.isRefreshing=false
+            }
+        }
     }
 
     private fun initArticle(){
-        articleList.clear()
-        repeat(10){
+        viewModel.articleList1.clear()
+        val i=(10..20).random()
+        repeat(i){
             val index=(0 until article.size).random()
-            articleList.add(article[index])
+            viewModel.articleList1.add(article[index])
         }
     }
 }

@@ -26,8 +26,12 @@ class HomePage:AppCompatActivity() {
         binding= HomePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val numberOfFrags1=2
+        val numberOfFrags2=0
+
         lifecycle.addObserver(AppObserver(lifecycle))
         viewModel=ViewModelProvider(this)[MainViewModel::class.java]
+
 
         //codes about action Bar
         setSupportActionBar(binding.toolBar)
@@ -40,16 +44,22 @@ class HomePage:AppCompatActivity() {
         binding.navView.setCheckedItem(R.id.nav_homePage)
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-
+                R.id.nav_me->startActivity(Intent(this,AboutMeActivity::class.java))
             }
             binding.drawerLayout.closeDrawers()
             true
         }
 
+
         //fragmentManager and TabLayout
         val adapterFrag=Adapter_frags_homePage(supportFragmentManager,lifecycle)
-        adapterFrag.addFrag(Frags_1_homePage())
-        adapterFrag.addFrag(Frags_1_homePage())
+        repeat(numberOfFrags1) {
+            adapterFrag.addFrag(Frags_1_homePage("$it".toInt()))
+        }
+        repeat(numberOfFrags2){
+            adapterFrag.addFrag(Frags_2_homePage())
+        }
+
         binding.pagerLayout.adapter=adapterFrag
         TabLayoutMediator(binding.tabLayout,binding.pagerLayout){tab,position->
             tab.text="OBJECT ${(position+1)}"
@@ -62,11 +72,9 @@ class HomePage:AppCompatActivity() {
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-
             }
         })
 
@@ -95,6 +103,8 @@ class HomePage:AppCompatActivity() {
                 "Setting".showToast(AllApplication.context)
             android.R.id.home->
                 binding.drawerLayout.openDrawer(GravityCompat.START)
+            R.id.menu_icon->
+                startActivity(Intent(this,AboutMeActivity::class.java))
         }
         return true
     }

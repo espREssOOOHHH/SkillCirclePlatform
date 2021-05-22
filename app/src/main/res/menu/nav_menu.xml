@@ -10,7 +10,7 @@
         android:icon="@drawable/icon_room"
         android:title="Message"/>
     <item
-        android:id="@+id/nav_WorkManager"
+        android:id="@+id/nav_me"
         android:icon="@drawable/nav_friends"
         android:title="About me"/>
 
