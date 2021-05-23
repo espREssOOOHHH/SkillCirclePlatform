@@ -2,8 +2,11 @@ package ttpicshk.tk.SkillCirlce
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,11 +18,13 @@ import com.google.android.material.tabs.TabLayoutMediator
 import ttpicshk.tk.SkillCirlce.Frags.Frags_1_homePage
 import ttpicshk.tk.SkillCirlce.Frags.Frags_2_homePage
 import ttpicshk.tk.SkillCirlce.databinding.HomePageBinding
+import kotlin.system.exitProcess
 
 class HomePage:AppCompatActivity() {
 
     lateinit var binding:HomePageBinding
     lateinit var viewModel: MainViewModel
+    private var firstQuitTime:Long=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +49,7 @@ class HomePage:AppCompatActivity() {
         binding.navView.setCheckedItem(R.id.nav_homePage)
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.nav_me->startActivity(Intent(this,AboutMeActivity::class.java))
+                R.id.nav_aboutMe->startActivity(Intent(this,AboutMeActivity::class.java))
             }
             binding.drawerLayout.closeDrawers()
             true
@@ -81,16 +86,32 @@ class HomePage:AppCompatActivity() {
     }
 
     private fun chooseTab(tab: TabLayout.Tab?) {
-
     }
 
     private fun recoverItemTab() {
+    }
 
+    //按两下back退出
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if(keyCode==KeyEvent.KEYCODE_BACK ){
+            if(System.currentTimeMillis()-firstQuitTime>2000){
+                "Touch Back Button Again to Quit".showToast(AllApplication.context)
+                firstQuitTime=System.currentTimeMillis()
+            }else{
+                finish()
+                exitProcess(0)
+            }
+        }
+        return true
     }
 
     //codes about menu button
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar,menu)
+        val iconDrawer=findViewById<View>(R.id.menu_icon)
+        iconDrawer.setOnClickListener {
+            startActivity(Intent(this,AboutMeActivity::class.java))
+        }
         return true
     }
 
@@ -103,9 +124,7 @@ class HomePage:AppCompatActivity() {
                 "Setting".showToast(AllApplication.context)
             android.R.id.home->
                 binding.drawerLayout.openDrawer(GravityCompat.START)
-            R.id.menu_icon->
-                startActivity(Intent(this,AboutMeActivity::class.java))
-        }
+                   }
         return true
     }
 }

@@ -3,16 +3,33 @@
 <group android:checkableBehavior="single">
     <item
         android:id="@+id/nav_homePage"
-        android:icon="@drawable/icon_model"
+        android:icon="@drawable/icon_homepage"
         android:title="HomePage"/>
     <item
-        android:id="@+id/nav_Room"
-        android:icon="@drawable/icon_room"
-        android:title="Message"/>
+        android:id="@+id/nav_nearBy"
+        android:icon="@drawable/icon_location"
+        android:title="Nearby"/>
     <item
-        android:id="@+id/nav_me"
-        android:icon="@drawable/nav_friends"
-        android:title="About me"/>
+        android:id="@+id/nav_comment"
+        android:icon="@drawable/icon_comment"
+        android:title="Comments"/>
+    <item
+        android:id="@+id/nav_aboutMe"
+        android:icon="@drawable/icon_about_me"
+        android:title="About Me"/>
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/icon_setting"
+        android:title="Settings"/>
+    <item
+        android:id="@+id/nav_theme"
+        android:icon="@drawable/icon_theme"
+        android:title="Theme"/>
+    <item
+        android:id="@+id/nav_more"
+        android:icon="@drawable/icon_more"
+        android:title="More"/>
+
 
 
 </group>

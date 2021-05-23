@@ -10,11 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkillCirclePlatform">
-        <activity android:name=".AboutMeActivity"></activity>
+        <activity android:name=".LogInActivity"></activity>
+        <activity android:name=".AboutMeActivity" />
         <activity
             android:name=".HomePage"
-            android:launchMode="singleInstance"
-            android:label="MainPage">
+            android:label="MainPage"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
