@@ -3,4 +3,6 @@
     <string name="title_of_mainPage">T E N S O R</string>
     <string name="sample_user">user</string>
     <string name="sample_signature">Fuck U ass hole</string>
+    <string name="user_name_hint">手机号或者邮箱</string>
+    <string name="password_hint">请输入密码</string>
 </resources>

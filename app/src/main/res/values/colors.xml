@@ -10,4 +10,6 @@
     <color name="colorPrimary">#FFCA28</color>
     <color name="colorAccent">#E91E63</color>
     <color name="fabBackground">#51353232</color>
+    <color name="transparent">#00000000</color>
+    <color name="gray">#75373636</color>
 </resources>

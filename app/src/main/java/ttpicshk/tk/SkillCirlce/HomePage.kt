@@ -50,6 +50,7 @@ class HomePage:AppCompatActivity() {
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_aboutMe->startActivity(Intent(this,AboutMeActivity::class.java))
+                R.id.nav_comment->startActivity(Intent(this,LogInActivity::class.java))
             }
             binding.drawerLayout.closeDrawers()
             true
@@ -89,6 +90,11 @@ class HomePage:AppCompatActivity() {
     }
 
     private fun recoverItemTab() {
+    }
+
+    override fun onResume() {
+        binding.navView.setCheckedItem(R.id.nav_homePage)
+        super.onResume()
     }
 
     //按两下back退出
