@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     xmlns:layout="http://schemas.android.com/tools"
@@ -20,6 +21,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/apple"/>
+            </RelativeLayout>
+
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -80,6 +94,152 @@
                     android:layout_marginEnd="25dp"
                     android:background="@drawable/ic_clear"/>
             </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="1dp">
+                <CheckBox
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:id="@+id/checked_remember_password"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="14sp"
+                    android:textAlignment="center"
+                    android:id="@+id/checked_textview"
+                    android:text="@string/login_3"
+                    android:layout_marginStart="40dp"/>
+            </FrameLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_login"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/login_1"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/round_button_login"
+                android:textColor="#fff" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_login_use_message"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/login_2"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/round_button_login"
+                android:backgroundTint="@color/gray"
+                android:textColor="#fff" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_4"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/transparent"
+                        android:layout_height="match_parent"/>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="8"
+                    android:layout_height="wrap_content">
+                    <FrameLayout
+                        android:layout_width="90dp"
+                        android:layout_height="95dp"
+                        android:id="@+id/frame_wechatLogin">
+                    <ImageButton
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:backgroundTint="@color/transparent"
+                        android:src="@drawable/icon_wechat"
+                        android:id="@+id/button_wechatLogin"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="80dp"
+                            android:text="@string/login_6"
+                            android:layout_marginStart="15dp"
+                            android:textSize="12sp"/>
+                    </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="90dp"
+                        android:layout_height="95dp"
+                        android:layout_marginStart="20dp"
+                        android:id="@+id/frame_qqLogin"
+                        android:layout_toEndOf="@+id/frame_wechatLogin">
+                    <ImageButton
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/icon_qq"
+                        android:backgroundTint="@color/transparent"
+                        android:id="@+id/button_qqLogin"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="80dp"
+                            android:text="@string/login_7"
+                            android:layout_marginStart="20dp"
+                            android:textSize="12sp"/>
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="90dp"
+                        android:layout_height="95dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_toEndOf="@+id/frame_qqLogin">
+                        <ImageButton
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/icon_weibo"
+                            android:backgroundTint="@color/transparent"
+                            android:id="@+id/button_weiboLogin"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="80dp"
+                            android:text="@string/login_8"
+                            android:layout_marginStart="20dp"
+                            android:textSize="12sp"/>
+                    </FrameLayout>
+                </RelativeLayout>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/transparent"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+            </FrameLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login_5"
+                android:textAlignment="textEnd"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/blue"/>
+
+
 
         </LinearLayout>
 

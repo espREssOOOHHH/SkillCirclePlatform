@@ -5,4 +5,12 @@
     <string name="sample_signature">Fuck U ass hole</string>
     <string name="user_name_hint">手机号或者邮箱</string>
     <string name="password_hint">请输入密码</string>
+    <string name="login_1">登录</string>
+    <string name="login_2">用短信验证码登录</string>
+    <string name="login_3">同意「用户协议」 </string>
+    <string name="login_4">-----------     第三方登录     -----------</string>
+    <string name="login_5">登录遇到问题?</string>
+    <string name="login_6">微信登录</string>
+    <string name="login_7">QQ登录</string>
+    <string name="login_8">微博登录</string>
 </resources>

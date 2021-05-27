@@ -12,4 +12,6 @@
     <color name="fabBackground">#51353232</color>
     <color name="transparent">#00000000</color>
     <color name="gray">#75373636</color>
+    <color name="red">#E53935</color>
+    <color name="blue">#1E88E5</color>
 </resources>

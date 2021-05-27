@@ -130,7 +130,7 @@ class HomePage:AppCompatActivity() {
                 "Setting".showToast(AllApplication.context)
             android.R.id.home->
                 binding.drawerLayout.openDrawer(GravityCompat.START)
-                   }
+        }
         return true
     }
 }
