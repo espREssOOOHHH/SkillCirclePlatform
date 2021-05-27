@@ -21,15 +21,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="昵称"
+            android:layout_marginStart="5dp"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif-condensed"
-            android:textSize="20dp"/>
+            android:textSize="22sp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/about_me_username"
+            android:layout_marginEnd="30dp"
+            android:text="jasdhjdsfdfds"
+            android:layout_marginStart="80dp"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true" />
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginEnd="5dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/icon_more" />
+            android:src="@drawable/icon_right_arrow" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,16 +49,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:text="ID"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif-condensed"
-            android:textSize="20dp"/>
+            android:textSize="22sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/about_me_id"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="80dp"
+            android:text="jasdhjdsfdfds"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true" />
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginEnd="5dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/icon_more" />
+            android:src="@drawable/icon_right_arrow" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -56,16 +78,82 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="个人信息"
+            android:layout_marginStart="5dp"
+            android:text="性别"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif-condensed"
-            android:textSize="20dp"/>
+            android:textSize="22sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/about_me_gender"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="30dp"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true" />
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginEnd="5dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/icon_more" />
+            android:src="@drawable/icon_right_arrow" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="生日"
+            android:layout_alignParentStart="true"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="22sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/about_me_birthday"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="30dp"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_right_arrow" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="个性签名"
+            android:layout_alignParentStart="true"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="22sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/about_me_signature"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="30dp"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_right_arrow" />
     </RelativeLayout>
 </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

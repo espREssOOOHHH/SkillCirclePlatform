@@ -49,49 +49,16 @@
                 android:maxLines="1"
                 android:layout_marginLeft="20dp"
                 android:background="@color/transparent"
+                android:inputType="phone"
+                android:numeric="integer"
                 android:layout_marginRight="20dp"
                 android:textSize="18sp"
                 android:gravity="center"
-                android:hint="@string/user_name_hint"/>
+                android:hint="手机号"/>
                 <Button
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:id="@+id/clearButton_userName_login"
-                    android:layout_gravity="end|center_vertical"
-                    android:layout_marginEnd="25dp"
-                    android:background="@drawable/ic_clear"/>
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_margin="20dp"
-                android:background="@drawable/round_corners_bg"
-                android:id="@+id/passwordFrame_login"
-                android:layout_marginStart="50dp">
-                <Button
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="start|center_vertical"
-                    android:layout_marginStart="25dp"
-                    android:id="@+id/showPassword_password_login"
-                    android:background="@drawable/icon_eye_close"/>
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/passwordText"
-                    android:maxLines="1"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/transparent"
-                    android:layout_marginEnd="20dp"
-                    android:textSize="18sp"
-                    android:inputType="textPassword"
-                    android:gravity="center"
-                    android:hint="@string/password_hint"/>
-                <Button
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:id="@+id/clearButton_password_login"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginEnd="25dp"
                     android:background="@drawable/ic_clear"/>
@@ -123,7 +90,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="20dp"
-                android:text="@string/login_1"
+                android:text="@string/login_9"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/round_button_login"
                 android:textColor="#fff" />
@@ -131,11 +98,11 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/button_login_use_message"
+                android:id="@+id/button_login_use_password"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/login_2"
+                android:text="@string/login_10"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@drawable/round_button_login"
                 android:backgroundTint="@color/gray"
@@ -236,10 +203,10 @@
             </FrameLayout>
             <TextView
                 android:layout_width="match_parent"
-                android:id="@+id/problemButton_login"
                 android:layout_height="wrap_content"
                 android:text="@string/login_5"
                 android:textAlignment="textEnd"
+                android:id="@+id/problemButton_login"
                 android:layout_marginEnd="20dp"
                 android:textColor="@color/blue"/>
 

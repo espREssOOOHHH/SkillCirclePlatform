@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import ttpicshk.tk.SkillCirlce.Frags.Frags_1_homePage
@@ -50,7 +51,7 @@ class HomePage:AppCompatActivity() {
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_aboutMe->startActivity(Intent(this,AboutMeActivity::class.java))
-                R.id.nav_comment->startActivity(Intent(this,LogInActivity::class.java))
+
             }
             binding.drawerLayout.closeDrawers()
             true
@@ -93,8 +94,19 @@ class HomePage:AppCompatActivity() {
     }
 
     override fun onResume() {
+        invalidateOptionsMenu()
         binding.navView.setCheckedItem(R.id.nav_homePage)
         super.onResume()
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val iconDrawer=findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.menu_icon)
+        iconDrawer.setImageResource(Account.userPhoto())
+        val name=findViewById<TextView>(R.id.menu_userText)
+        name.text=Account.userName()
+        val signature=findViewById<TextView>(R.id.menu_signature)
+        signature.text=Account.signature()
+        return super.onPrepareOptionsMenu(menu)
     }
 
     //按两下back退出
@@ -114,12 +126,20 @@ class HomePage:AppCompatActivity() {
     //codes about menu button
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar,menu)
-        val iconDrawer=findViewById<View>(R.id.menu_icon)
+        val iconDrawer=findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.menu_icon)
+
+        iconDrawer.setImageResource(Account.userPhoto())
+        val name=findViewById<TextView>(R.id.menu_userText)
+        name.text=Account.userName()
+        val signature=findViewById<TextView>(R.id.menu_signature)
+        signature.text=Account.signature()
+
         iconDrawer.setOnClickListener {
             startActivity(Intent(this,AboutMeActivity::class.java))
         }
         return true
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){

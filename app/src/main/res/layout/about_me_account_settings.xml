@@ -15,21 +15,31 @@
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:padding="5dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="设置密码"
                 android:layout_alignParentStart="true"
                 android:fontFamily="sans-serif-condensed"
-                android:textSize="20dp"/>
+                android:textSize="22sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/about_me_password_setting"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="30dp"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true" />
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/icon_more" />
+                android:src="@drawable/icon_right_arrow" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -38,16 +48,159 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="手机号"
                 android:layout_alignParentStart="true"
                 android:fontFamily="sans-serif-condensed"
-                android:textSize="20dp"/>
+                android:textSize="22sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/about_me_phone"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="30dp"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true" />
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/icon_more" />
+                android:src="@drawable/icon_right_arrow" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="邮箱"
+                android:layout_alignParentStart="true"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="22sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/about_me_email"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="30dp"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/icon_right_arrow" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/icon_wechat"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="3dp"
+                android:text="  微信"
+                android:layout_alignParentStart="true"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="22sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/about_me_wechat"
+                android:layout_marginStart="120dp"
+                android:layout_marginEnd="30dp"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/icon_right_arrow" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/icon_weibo"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="3dp"
+                android:text="  微博"
+                android:layout_alignParentStart="true"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="22sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/about_me_weibo"
+                android:layout_marginStart="120dp"
+                android:layout_marginEnd="30dp"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/icon_right_arrow" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/icon_qq"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="3dp"
+                android:text="  QQ"
+                android:layout_alignParentStart="true"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="22sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/about_me_qq"
+                android:layout_marginStart="120dp"
+                android:layout_marginEnd="30dp"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/icon_right_arrow" />
         </RelativeLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

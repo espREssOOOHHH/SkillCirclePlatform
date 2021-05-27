@@ -9,8 +9,13 @@
     <string name="login_2">用短信验证码登录</string>
     <string name="login_3">同意「用户协议」 </string>
     <string name="login_4">-----------     第三方登录     -----------</string>
-    <string name="login_5">登录遇到问题?</string>
+    <string name="login_5">忘记密码/登录遇到问题?</string>
     <string name="login_6">微信登录</string>
     <string name="login_7">QQ登录</string>
     <string name="login_8">微博登录</string>
+    <string name="login_9">获取验证码</string>
+    <string name="login_10">用账号密码登录</string>
+    <string name="user_policy_1">同意</string>
+    <string name="user_policy_2">拒绝</string>
+    <string name="user_policy_3">用户使用协议</string>
 </resources>

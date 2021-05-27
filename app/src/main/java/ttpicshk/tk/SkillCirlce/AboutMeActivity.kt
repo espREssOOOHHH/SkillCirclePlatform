@@ -8,28 +8,39 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
+import ttpicshk.tk.SkillCirlce.databinding.AboutMeAccountSettingsBinding
 import ttpicshk.tk.SkillCirlce.databinding.AboutMeLayoutBinding
+import ttpicshk.tk.SkillCirlce.databinding.AboutMeSettingsPersonalInfoBinding
 
 class AboutMeActivity : AppCompatActivity() {
     lateinit var binding:AboutMeLayoutBinding
+    lateinit var bindingPersonalInfo:AboutMeSettingsPersonalInfoBinding
+    lateinit var bindingAccountSettings:AboutMeAccountSettingsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(!Account.IsOnLine())
-        {
-
-        }
         binding= AboutMeLayoutBinding.inflate(layoutInflater)
+        bindingPersonalInfo= AboutMeSettingsPersonalInfoBinding.inflate(layoutInflater)
+        bindingAccountSettings= AboutMeAccountSettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-        Account.LogIn("Jackson","20392984","12498792")
+        if(!Account.IsOnLine())
+        {
+            "请先登录".showToast(this)
+            finish()
+            startActivity(Intent(this,LogInActivity::class.java))
+        }
 
-        val userName=Account.userName()
-        val userPhoto=Account.userPhoto()
         setSupportActionBar(binding.toolbarAboutMe)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.collapseToolBarAboutMe.title=userName
-        Glide.with(this).load(userPhoto).into(binding.userPhotoAboutMe)
+        binding.collapseToolBarAboutMe.title=Account.userName()
+        Glide.with(this).load(Account.userPhoto()).into(binding.userPhotoAboutMe)
+        bindingPersonalInfo.aboutMeUsername.text=Account.userName()
+        bindingPersonalInfo.aboutMeSignature.text=Account.signature()
+        bindingPersonalInfo.aboutMeBirthday.text=Account.birthday()
+        bindingPersonalInfo.aboutMeGender.text=Account.gender()
+        bindingPersonalInfo.aboutMeId.text=Account.id()
+
 
 
 
