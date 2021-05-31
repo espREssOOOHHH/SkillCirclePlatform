@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ttpicshk.tk.SkillCirlce">
 
+    <permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".AllApplication"
         android:allowBackup="true"
@@ -10,8 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkillCirclePlatform">
-        <activity android:name=".LogInActivity"></activity>
-        <activity android:name=".AboutMeActivity" />
+        <activity android:name=".WriteArticle"></activity>
+        <activity
+            android:name=".ArticleDetail"
+            android:theme="@style/DetailPageTheme" />
+        <activity android:name=".LogInActivity" />
+        <activity
+            android:name=".AboutMeActivity"
+            android:theme="@style/DetailPageTheme" />
         <activity
             android:name=".HomePage"
             android:label="MainPage"

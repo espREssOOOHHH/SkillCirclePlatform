@@ -10,12 +10,16 @@ object Account {
     private var birthday="2013-02-10"
     private var gender=2
     private var id="0"
+    private var email="xxyyy@ss.com"
+    private var phone="0000000000000"
 
     fun userName():String= userName
     fun userPhoto():Int= photoId
     fun signature():String= signature
     fun birthday():String= birthday
     fun id():String=id
+    fun email():String=email
+    fun phone():String=phone
 
     fun gender():String{
         var backValue=""

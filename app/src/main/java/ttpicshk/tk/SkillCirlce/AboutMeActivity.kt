@@ -19,9 +19,9 @@ class AboutMeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= AboutMeLayoutBinding.inflate(layoutInflater)
-        bindingPersonalInfo= AboutMeSettingsPersonalInfoBinding.inflate(layoutInflater)
-        bindingAccountSettings= AboutMeAccountSettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        bindingPersonalInfo=binding.aboutMeSettingsPersonalInfo
+        bindingAccountSettings=binding.aboutMeAccountSettings
 
 
         if(!Account.IsOnLine())
@@ -34,12 +34,16 @@ class AboutMeActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbarAboutMe)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.collapseToolBarAboutMe.title=Account.userName()
-        Glide.with(this).load(Account.userPhoto()).into(binding.userPhotoAboutMe)
+        Glide.with(this).load(R.drawable.apple).into(binding.userPhotoAboutMe)
+        binding.userPhotoAboutMe.setImageResource(Account.userPhoto())
+
         bindingPersonalInfo.aboutMeUsername.text=Account.userName()
         bindingPersonalInfo.aboutMeSignature.text=Account.signature()
         bindingPersonalInfo.aboutMeBirthday.text=Account.birthday()
         bindingPersonalInfo.aboutMeGender.text=Account.gender()
         bindingPersonalInfo.aboutMeId.text=Account.id()
+        bindingAccountSettings.aboutMeEmail.text=Account.email()
+        bindingAccountSettings.aboutMePhone.text=Account.phone()
 
 
 

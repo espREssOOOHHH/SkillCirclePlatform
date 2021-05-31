@@ -8,4 +8,7 @@
         <item name="android:navigationBarColor">#FFA726</item>
         <item name="colorAccent">#FFEB3B</item>
     </style>
+    <style name="DetailPageTheme" parent="Theme.SkillCirclePlatform">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 </resources>
