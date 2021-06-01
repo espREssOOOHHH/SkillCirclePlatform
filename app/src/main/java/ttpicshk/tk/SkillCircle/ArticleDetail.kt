@@ -1,4 +1,4 @@
-package ttpicshk.tk.SkillCirlce
+package ttpicshk.tk.SkillCircle
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.bumptech.glide.Glide
-import ttpicshk.tk.SkillCirlce.databinding.ArticleDetailBinding
-import kotlin.concurrent.thread
+import ttpicshk.tk.SkillCircle.databinding.ArticleDetailBinding
 
 class ArticleDetail : AppCompatActivity() {
     lateinit var binding:ArticleDetailBinding

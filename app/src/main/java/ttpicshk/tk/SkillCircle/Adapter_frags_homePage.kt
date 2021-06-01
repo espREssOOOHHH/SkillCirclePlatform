@@ -1,4 +1,4 @@
-package ttpicshk.tk.SkillCirlce
+package ttpicshk.tk.SkillCircle
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

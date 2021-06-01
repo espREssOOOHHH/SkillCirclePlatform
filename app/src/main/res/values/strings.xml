@@ -18,4 +18,7 @@
     <string name="user_policy_1">同意</string>
     <string name="user_policy_2">拒绝</string>
     <string name="user_policy_3">用户使用协议</string>
+    <string name="title_of_write_article">发表文章</string>
+    <string name="search_onMainPage">搜索🔍</string>
+
 </resources>

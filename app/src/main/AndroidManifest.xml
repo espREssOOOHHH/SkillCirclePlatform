@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ttpicshk.tk.SkillCirlce">
+    package="ttpicshk.tk.SkillCircle">
 
-    <permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
     <application
-        android:name=".AllApplication"
+        android:name="ttpicshk.tk.SkillCircle.AllApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkillCirclePlatform">
-        <activity android:name=".WriteArticle"></activity>
+
+        <activity android:name="ttpicshk.tk.SkillCircle.WriteArticle"></activity>
         <activity
-            android:name=".ArticleDetail"
+            android:name="ttpicshk.tk.SkillCircle.ArticleDetail"
             android:theme="@style/DetailPageTheme" />
-        <activity android:name=".LogInActivity" />
+        <activity android:name="ttpicshk.tk.SkillCircle.LogInActivity" />
         <activity
-            android:name=".AboutMeActivity"
+            android:name="ttpicshk.tk.SkillCircle.AboutMeActivity"
             android:theme="@style/DetailPageTheme" />
         <activity
-            android:name=".HomePage"
+            android:name="ttpicshk.tk.SkillCircle.HomePage"
             android:label="MainPage"
             android:launchMode="singleInstance">
             <intent-filter>

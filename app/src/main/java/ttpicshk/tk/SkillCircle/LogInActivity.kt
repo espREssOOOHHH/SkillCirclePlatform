@@ -1,21 +1,16 @@
-package ttpicshk.tk.SkillCirlce
+package ttpicshk.tk.SkillCircle
 
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.*
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.GravityCompat
-import ttpicshk.tk.SkillCirlce.databinding.LoginLayoutBinding
-import ttpicshk.tk.SkillCirlce.databinding.LoginLayoutUseMessageBinding
+import ttpicshk.tk.SkillCircle.databinding.LoginLayoutBinding
+import ttpicshk.tk.SkillCircle.databinding.LoginLayoutUseMessageBinding
 
 class LogInActivity : AppCompatActivity() {
     lateinit var binding:LoginLayoutBinding

@@ -1,11 +1,11 @@
-package ttpicshk.tk.SkillCirlce.Frags
+package ttpicshk.tk.SkillCircle.Frags
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ttpicshk.tk.SkillCirlce.R
+import ttpicshk.tk.SkillCircle.R
 
 class Frags_2_homePage:Fragment() {
 

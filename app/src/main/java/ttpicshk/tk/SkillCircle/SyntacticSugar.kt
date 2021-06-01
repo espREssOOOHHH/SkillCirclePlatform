@@ -1,4 +1,4 @@
-package ttpicshk.tk.SkillCirlce
+package ttpicshk.tk.SkillCircle
 
 import android.content.Context
 import android.content.Intent

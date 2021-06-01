@@ -1,4 +1,4 @@
-package ttpicshk.tk.SkillCirlce.Frags
+package ttpicshk.tk.SkillCircle.Frags
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import ttpicshk.tk.SkillCirlce.*
-import ttpicshk.tk.SkillCirlce.databinding.FragHomepageBinding
+import ttpicshk.tk.SkillCircle.*
+import ttpicshk.tk.SkillCircle.databinding.FragHomepageBinding
 import kotlin.concurrent.thread
 
 class Frags_1_homePage(var idFrag:Int):Fragment() {

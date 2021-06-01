@@ -1,16 +1,13 @@
-package ttpicshk.tk.SkillCirlce
+package ttpicshk.tk.SkillCircle
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
-import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
-import ttpicshk.tk.SkillCirlce.databinding.AboutMeAccountSettingsBinding
-import ttpicshk.tk.SkillCirlce.databinding.AboutMeLayoutBinding
-import ttpicshk.tk.SkillCirlce.databinding.AboutMeSettingsPersonalInfoBinding
+import ttpicshk.tk.SkillCircle.databinding.AboutMeAccountSettingsBinding
+import ttpicshk.tk.SkillCircle.databinding.AboutMeLayoutBinding
+import ttpicshk.tk.SkillCircle.databinding.AboutMeSettingsPersonalInfoBinding
 
 class AboutMeActivity : AppCompatActivity() {
     lateinit var binding:AboutMeLayoutBinding

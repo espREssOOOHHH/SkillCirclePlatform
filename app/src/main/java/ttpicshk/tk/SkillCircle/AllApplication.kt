@@ -1,4 +1,4 @@
-package ttpicshk.tk.SkillCirlce
+package ttpicshk.tk.SkillCircle
 
 import android.annotation.SuppressLint
 import android.app.Application

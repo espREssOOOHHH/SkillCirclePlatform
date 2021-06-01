@@ -1,24 +1,21 @@
-package ttpicshk.tk.SkillCirlce
+package ttpicshk.tk.SkillCircle
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import ttpicshk.tk.SkillCirlce.Frags.Frags_1_homePage
-import ttpicshk.tk.SkillCirlce.Frags.Frags_2_homePage
-import ttpicshk.tk.SkillCirlce.databinding.HomePageBinding
+import ttpicshk.tk.SkillCircle.Frags.Frags_1_homePage
+import ttpicshk.tk.SkillCircle.Frags.Frags_2_homePage
+import ttpicshk.tk.SkillCircle.databinding.HomePageBinding
 import kotlin.system.exitProcess
 
 class HomePage:AppCompatActivity() {
@@ -85,6 +82,8 @@ class HomePage:AppCompatActivity() {
             }
         })
 
+
+
     }
 
     private fun chooseTab(tab: TabLayout.Tab?) {
@@ -134,6 +133,29 @@ class HomePage:AppCompatActivity() {
         val signature=findViewById<TextView>(R.id.menu_signature)
         signature.text=Account.signature()
 
+        //搜索框
+        val search:MenuItem=menu!!.findItem(R.id.search_actionBar)
+        val searchView:SearchView= search.actionView as SearchView
+        searchView.isIconifiedByDefault=true
+        searchView.isSubmitButtonEnabled=true
+        searchView.isSubmitButtonEnabled=true
+        searchView.imeOptions=EditorInfo.IME_ACTION_SEARCH
+        searchView.isIconified=false
+        searchView.isFocusable=true
+        searchView.requestFocusFromTouch()
+        searchView.queryHint="请输入内容"
+        //search on action bar
+        searchView.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                Snackbar.make(binding.pagerLayout,"🔍: $query",Snackbar.LENGTH_SHORT).show()
+                searchView.clearFocus()
+                return false
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+
         iconDrawer.setOnClickListener {
             startActivity(Intent(this,AboutMeActivity::class.java))
         }
@@ -143,8 +165,8 @@ class HomePage:AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.backup-> {
-                Toast.makeText(AllApplication.context,"💽", Toast.LENGTH_SHORT).show()
+            R.id.write_article_actionBar-> {
+                startActivity(Intent(this,WriteArticle::class.java))
             }
             R.id.settings->
                 "Setting".showToast(AllApplication.context)
