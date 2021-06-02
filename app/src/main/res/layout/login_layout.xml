@@ -31,6 +31,7 @@
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:id="@+id/logo_login"
                     android:scaleType="centerCrop"
                     android:src="@drawable/apple"/>
             </RelativeLayout>
@@ -234,17 +235,29 @@
                         android:layout_height="match_parent"/>
                 </LinearLayout>
             </FrameLayout>
-            <TextView
+
+            <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/create_user_login"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/login_11"
+                    android:textColor="@color/blue"
+                    android:textAlignment="viewStart"
+                    android:layout_marginStart="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
                 android:id="@+id/problemButton_login"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:text="@string/login_5"
                 android:textAlignment="textEnd"
                 android:layout_marginEnd="20dp"
                 android:textColor="@color/blue"/>
-
-
-
+            </RelativeLayout>
         </LinearLayout>
 
 

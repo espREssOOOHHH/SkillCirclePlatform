@@ -5,6 +5,7 @@
     <string name="sample_signature">Fuck U ass hole</string>
     <string name="user_name_hint">手机号或者邮箱</string>
     <string name="password_hint">请输入密码</string>
+    <string name="password_hint_2">请确认密码</string>
     <string name="login_1">登录</string>
     <string name="login_2">用短信验证码登录</string>
     <string name="login_3">同意「用户协议」 </string>
@@ -15,10 +16,27 @@
     <string name="login_8">微博登录</string>
     <string name="login_9">获取验证码</string>
     <string name="login_10">用账号密码登录</string>
+    <string name="login_11">注册账户</string>
+    <string name="login_12">请输入邮箱</string>
+    <string name="login_13">注册</string>
     <string name="user_policy_1">同意</string>
     <string name="user_policy_2">拒绝</string>
     <string name="user_policy_3">用户使用协议</string>
     <string name="title_of_write_article">发表文章</string>
     <string name="search_onMainPage">搜索🔍</string>
-
+    <string name="about_me_account_settings_1">设置密码</string>
+    <string name="about_me_account_settings_2">手机号</string>
+    <string name="about_me_account_settings_3">邮箱</string>
+    <string name="about_me_account_settings_4">  微信</string>
+    <string name="about_me_account_settings_5">  微博</string>
+    <string name="about_me_account_settings_6">  QQ</string>
+    <string name="about_me_settings_more_1">注销</string>
+    <string name="about_me_settings_more_2">用户中心</string>
+    <string name="about_me_personal_info_1">昵称</string>
+    <string name="about_me_personal_info_2">ID</string>
+    <string name="about_me_personal_info_3">性别</string>
+    <string name="about_me_personal_info_4">生日</string>
+    <string name="about_me_personal_info_5">个性签名</string>
+    <string name="about_me_personal_info_6">修改头像</string>
+    <string name="about_me_personal_info_7">修改主页背景</string>
 </resources>

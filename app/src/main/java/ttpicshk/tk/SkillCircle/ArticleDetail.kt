@@ -1,6 +1,7 @@
 package ttpicshk.tk.SkillCircle
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -25,10 +26,10 @@ class ArticleDetail : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val title=intent.getStringExtra(ARTICLE_TITLE)?:"文章详情"
-        val imageId=intent.getIntExtra(ARTICLE_IMAGE_ID,0)
+        val imageId=intent.getSerializableExtra("IMAGES") as ArrayList<*>
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.collapseToolBar.title=title
-        Glide.with(AllApplication.context).load(imageId).into(binding.headImageView)
+        Glide.with(AllApplication.context).load(imageId[0]).into(binding.headImageView)
 
         val text=intent.getStringExtra(ARTICLE_CONTENT)?:"文章文章文章\n文章文章文章\n"
         binding.articleText.text=text

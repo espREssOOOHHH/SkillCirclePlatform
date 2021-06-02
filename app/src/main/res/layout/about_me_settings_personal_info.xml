@@ -16,22 +16,61 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:padding="5dp"
+        android:id="@+id/about_me_userPhotoBtn"
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="昵称"
+            android:text="@string/about_me_personal_info_6"
             android:layout_marginStart="5dp"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif-condensed"
             android:textSize="22sp"/>
-
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_right_arrow" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:id="@+id/about_me_userBackGroundBtn"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_me_personal_info_7"
+            android:layout_marginStart="5dp"
+            android:layout_alignParentStart="true"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="22sp"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_right_arrow" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:id="@+id/about_me_usernameBtn"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_me_personal_info_1"
+            android:layout_marginStart="5dp"
+            android:layout_alignParentStart="true"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="22sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/about_me_username"
             android:layout_marginEnd="30dp"
-            android:text="jasdhjdsfdfds"
             android:layout_marginStart="80dp"
             android:textSize="16sp"
             android:layout_alignParentEnd="true" />
@@ -45,12 +84,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/about_me_idBtn"
         android:padding="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="ID"
+            android:text="@string/about_me_personal_info_2"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif-condensed"
             android:textSize="22sp"/>
@@ -60,7 +100,6 @@
             android:id="@+id/about_me_id"
             android:layout_marginEnd="30dp"
             android:layout_marginStart="80dp"
-            android:text="jasdhjdsfdfds"
             android:textSize="16sp"
             android:layout_alignParentEnd="true" />
 
@@ -73,13 +112,14 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
+        android:id="@+id/about_me_genderBtn"
         android:layout_height="wrap_content"
         android:padding="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="性别"
+            android:text="@string/about_me_personal_info_3"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif-condensed"
             android:textSize="22sp"/>
@@ -102,12 +142,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/about_me_birthdayBtn"
         android:padding="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="生日"
+            android:text="@string/about_me_personal_info_4"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif-condensed"
             android:textSize="22sp"/>
@@ -130,12 +171,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/about_me_signatureBtn"
         android:padding="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="个性签名"
+            android:text="@string/about_me_personal_info_5"
             android:layout_alignParentStart="true"
             android:fontFamily="sans-serif-condensed"
             android:textSize="22sp"/>

@@ -10,12 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class ArticleAdapter(val context:Context,val articleList:List<Article>)
+class ArticleAdapter(val context:Context, private val articleList:ArrayList<Article>)
     :RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
 
         inner class ViewHolder(view:View):RecyclerView.ViewHolder(view){
             val title:TextView=view.findViewById(R.id.article_Title)
-            val image:ImageView=view.findViewById(R.id.article_Image)
+            val image_1:ImageView=view.findViewById(R.id.article_Image_1)
         }
 
 
@@ -27,7 +27,7 @@ class ArticleAdapter(val context:Context,val articleList:List<Article>)
             val article=articleList[position]
             val intent= Intent(context,ArticleDetail::class.java).apply {
                 putExtra(ArticleDetail.ARTICLE_TITLE,article.title)
-                putExtra(ArticleDetail.ARTICLE_IMAGE_ID,article.imageId)
+                putExtra("IMAGES",article.images)
                 putExtra(ArticleDetail.ARTICLE_CONTENT,article.content)
             }.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
@@ -38,7 +38,10 @@ class ArticleAdapter(val context:Context,val articleList:List<Article>)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val article=articleList[position]
         holder.title.text=article.title
-        Glide.with(context).load(article.imageId).into(holder.image)
+        if(article.images.size==1) {
+            holder.image_1.visibility=View.VISIBLE
+            Glide.with(AllApplication.context).load(article.images[0]).into(holder.image_1)
+        }
     }
 
     override fun getItemCount(): Int =articleList.size

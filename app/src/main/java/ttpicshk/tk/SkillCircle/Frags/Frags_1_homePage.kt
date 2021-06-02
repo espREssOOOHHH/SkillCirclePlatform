@@ -1,6 +1,7 @@
 package ttpicshk.tk.SkillCircle.Frags
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +12,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import ttpicshk.tk.SkillCircle.*
 import ttpicshk.tk.SkillCircle.databinding.FragHomepageBinding
@@ -19,11 +21,12 @@ import kotlin.concurrent.thread
 class Frags_1_homePage(var idFrag:Int):Fragment() {
 
     private lateinit var viewModel:MainViewModel
-    val article= mutableListOf(Article("hello","skdfjshfk",R.drawable.grape),
-    Article("duck","sdkfjhs",R.drawable.apple),
-    Article("cherry","djfshkfd",R.drawable.cherry)
+    val article= mutableListOf(Article("Grape-Title","grapes".repeat(10),
+        arrayListOf(Uri.parse("https://tse4-mm.cn.bing.net/th/id/OIP.gH3rAGvlRDPBfEtlbRHVzgHaEo?w=234&h=180&c=7&o=5&dpr=2&pid=1.7"))
+    ),
+    Article("Duck-Title","ducks".repeat(10), arrayListOf(Uri.parse("https://tse4-mm.cn.bing.net/th/id/OIP.gH3rAGvlRDPBfEtlbRHVzgHaEo?w=234&h=180&c=7&o=5&dpr=2&pid=1.7"))),
+    Article("Book","books".repeat(10), arrayListOf(Uri.parse("https://tse4-mm.cn.bing.net/th/id/OIP.gH3rAGvlRDPBfEtlbRHVzgHaEo?w=234&h=180&c=7&o=5&dpr=2&pid=1.7")))
     )
-    val articleList=ArrayList<Article>()
     lateinit var binding:FragHomepageBinding
     @SuppressLint("ResourceAsColor")
 
@@ -38,7 +41,7 @@ class Frags_1_homePage(var idFrag:Int):Fragment() {
 
         initArticle()
 
-        binding.recyclerViewFrags.layoutManager=GridLayoutManager(this.activity,2)
+        binding.recyclerViewFrags.layoutManager=GridLayoutManager(this.activity,1)
         val adapter=ArticleAdapter(AllApplication.context,viewModel.articleList1)
         binding.recyclerViewFrags.adapter=adapter
 
@@ -76,7 +79,7 @@ class Frags_1_homePage(var idFrag:Int):Fragment() {
     private fun refreshArticle(adapter: ArticleAdapter){
         thread {
             Thread.sleep(1000)
-            activity!!.runOnUiThread{
+            requireActivity().runOnUiThread{
                 Snackbar.make(binding.fabFrags,"Refreshed",Snackbar.LENGTH_SHORT)
                     .setAction("Got it"){}
                     .show()

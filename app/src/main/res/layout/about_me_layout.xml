@@ -24,9 +24,21 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/userPhoto_aboutMe"
+                android:id="@+id/userPhotoBG_aboutMe"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:padding="5dp"
+                android:src="@drawable/icon_face"
+                android:id="@+id/userPhoto_aboutMe"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:fitsSystemWindows="true"
+                android:layout_gravity="bottom|end"
                 app:layout_collapseMode="parallax"/>
 
             <androidx.appcompat.widget.Toolbar
@@ -49,24 +61,16 @@
             android:padding="10dp"
             android:orientation="vertical">
 
+            <include layout="@layout/about_me_settings_personal_info"
+                android:id="@+id/about_me_settings_personal_info"/>
+            <include layout="@layout/about_me_account_settings"
+                android:id="@+id/about_me_account_settings"/>
+            <include layout="@layout/about_me_settings_more"
+                android:id="@+id/about_me_settings_more"/>
 
-                <include layout="@layout/about_me_settings_personal_info"
-                    android:id="@+id/about_me_settings_personal_info"/>
-                <include layout="@layout/about_me_account_settings"
-                    android:id="@+id/about_me_account_settings"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_comment"
-        android:id="@+id/fab_aboutMe"
-        android:backgroundTint="@color/colorAccent"
-        app:layout_anchor="@id/appBar_aboutMe"
-        app:layout_anchorGravity="bottom|start"/>
 
 
 

@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -34,6 +35,7 @@ class HomePage:AppCompatActivity() {
 
         lifecycle.addObserver(AppObserver(lifecycle))
         viewModel=ViewModelProvider(this)[MainViewModel::class.java]
+
 
 
         //codes about action Bar
@@ -100,7 +102,9 @@ class HomePage:AppCompatActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         val iconDrawer=findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.menu_icon)
-        iconDrawer.setImageResource(Account.userPhoto())
+        Glide.with(AllApplication.context).load(Account.userPhoto()).into(iconDrawer)
+        val background=findViewById<ImageView>(R.id.menu_background)
+        Glide.with(AllApplication.context).load(Account.userBackGround()).into(background)
         val name=findViewById<TextView>(R.id.menu_userText)
         name.text=Account.userName()
         val signature=findViewById<TextView>(R.id.menu_signature)
@@ -126,8 +130,9 @@ class HomePage:AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar,menu)
         val iconDrawer=findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.menu_icon)
-
-        iconDrawer.setImageResource(Account.userPhoto())
+        val background=findViewById<ImageView>(R.id.menu_background)
+        Glide.with(AllApplication.context).load(Account.userPhoto()).into(iconDrawer)
+        Glide.with(AllApplication.context).load(Account.userBackGround()).into(background)
         val name=findViewById<TextView>(R.id.menu_userText)
         name.text=Account.userName()
         val signature=findViewById<TextView>(R.id.menu_signature)

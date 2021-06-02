@@ -1,15 +1,14 @@
 package ttpicshk.tk.SkillCircle
 
 import android.content.Intent
-import android.graphics.Picture
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
+import android.view.View
+import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
-import com.luck.picture.lib.entity.LocalMedia
 import com.luck.pictureselector.GlideEngine
 import ttpicshk.tk.SkillCircle.databinding.WriteArticleLayoutBinding
 
@@ -25,33 +24,51 @@ class WriteArticle : AppCompatActivity() {
         supportActionBar?.let {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.icon_close)
+            it.title="发表文章"
+            it.subtitle=Account.userName()
         }
 
 
-        //select photo
-        /*val resultLauncher=registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()){
-                result->
-                if (result.resultCode == RESULT_OK) {
-                    val data=result.data
-                    var selectList = PictureSelector.obtainMultipleResult(data)
-                    Glide.with(AllApplication.context).load(selectList[0].path)
-                        .into(binding.photo1WriteArticle)
-                }
-        }*/
         binding.selectPhotoWriteArticle.setOnClickListener {
             selectPhoto()
-            //resultLauncher.launch(intent)
         }
+        binding.atWriteArticle.setOnClickListener {
+            "at".showToast(this)
+        }
+        binding.sharpWriteArticle.setOnClickListener {
+            "sharp".showToast(this)
+        }
+        binding.sendWriteArticle.setOnClickListener {
+            sendArticle()
+        }
+    }
+
+    private fun sendArticle() {
+        "send success".showToast(AllApplication.context)
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-            val data=data
-            var selectList = PictureSelector.obtainMultipleResult(data)
-            Glide.with(AllApplication.context).load(selectList[0].path)
-                .into(binding.photo1WriteArticle)
+            val selectList = PictureSelector.obtainMultipleResult(data)
+            val bindingList= listOf<ImageView>(binding.photo1WriteArticle,binding.photo2WriteArticle,
+                binding.photo3WriteArticle,binding.photo4WriteArticle,binding.photo5WriteArticle,
+            binding.photo6WriteArticle,binding.photo7WriteArticle,binding.photo8WriteArticle,
+            binding.photo9WriteArticle)
+            val bindingLists= listOf<View>(binding.photoG1,binding.photoG2,binding.photoG3)
+            runOnUiThread {
+                for((i, item) in selectList.withIndex()) {
+                    Glide.with(AllApplication.context).load(item.path)
+                        .into(bindingList[i])
+                    if(i%3==0){
+                        bindingLists[i/3].visibility=View.VISIBLE
+                    }
+                    if(i==2)
+                        binding.photoG3s.visibility=View.VISIBLE
+                }
+            }
+
         }
     }
 
@@ -64,6 +81,5 @@ class WriteArticle : AppCompatActivity() {
             .maxSelectNum(9)
             .minSelectNum(1)
             .forResult(PictureConfig.CHOOSE_REQUEST)
-
     }
 }
