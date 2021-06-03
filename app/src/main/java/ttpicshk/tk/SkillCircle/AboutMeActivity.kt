@@ -1,11 +1,13 @@
 package ttpicshk.tk.SkillCircle
 
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import android.widget.ImageView
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
@@ -47,6 +49,24 @@ class AboutMeActivity : AppCompatActivity() {
         binding.collapseToolBarAboutMe.title=Account.userName()
         Glide.with(this).load(Account.userBackGround()).into(binding.userPhotoBGAboutMe)
         Glide.with(AllApplication.context).load(Account.userPhoto()).into(binding.userPhotoAboutMe)
+        binding.userPhotoAboutMe.setOnClickListener {
+            val dialog= Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(true)
+            dialog.setContentView(R.layout.photo_big_view)
+            val picture=dialog.findViewById<ImageView>(R.id.pictureViewDialog)
+            Glide.with(this).load(Account.userPhoto()).into(picture)
+            dialog.show()
+        }
+        binding.userPhotoBGAboutMe.setOnClickListener {
+            val dialog= Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(true)
+            dialog.setContentView(R.layout.photo_big_view)
+            val picture=dialog.findViewById<ImageView>(R.id.pictureViewDialog)
+            Glide.with(this).load(Account.userBackGround()).into(picture)
+            dialog.show()
+        }
 
         bindingPersonalInfo.aboutMeUsername.text=Account.userName()
         bindingPersonalInfo.aboutMeSignature.text=Account.signature()

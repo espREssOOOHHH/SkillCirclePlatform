@@ -77,8 +77,28 @@
             android:maxWidth="200dp"
             android:scaleType="centerCrop"
             android:padding="3dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:id="@+id/article_Image_1"
             android:visibility="gone"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/article_Image_3"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"/>
+            </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 

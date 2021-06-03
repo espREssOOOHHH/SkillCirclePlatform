@@ -1,10 +1,12 @@
 package ttpicshk.tk.SkillCircle
 
 import android.net.Uri
+import android.util.JsonToken
 import android.util.Log
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import kotlin.concurrent.thread
 
 
 object Account{
@@ -20,6 +22,7 @@ object Account{
     private var email="xxyyy@ss.com"
     private var phone="0000000000000"
     private var photoBg:Uri=Uri.parse("https://tse4-mm.cn.bing.net/th/id/OIP.gH3rAGvlRDPBfEtlbRHVzgHaEo?w=234&h=180&c=7&o=5&dpr=2&pid=1.7")
+    lateinit var token: JsonToken
 
     fun userName():String= userName
     fun userPhoto(photo:Uri?=null):Uri{
@@ -48,45 +51,30 @@ object Account{
         return backValue
     }
 
-    fun LogIn(username:String,password:String,phone:String) :Boolean{
+    fun LogIn(username:String,password:String,phone:String){
         isLogin=true
         userName=username
         passWord=password
         phoneNumber=phone
-        return true
     }
-    fun LogIn_UserName(username:String,password:String):Boolean{
-        val client = OkHttpClient().newBuilder()
-            .build()
-        val mediaType: MediaType? = "text/plain".toMediaTypeOrNull()
-        val body: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-            .addFormDataPart("username", username)
-            .addFormDataPart("password", password)
-            .build()
-        val request: Request = Request.Builder()
-            .url("http://api.classtest.com/user/login")
-            .method("POST", body)
-            .build()
-        val response: Response = client.newCall(request).execute()
-        return response.isSuccessful
-    }
+
     fun LogOut():Boolean{
-        /*val client = OkHttpClient().newBuilder()
-            .build()
-        val mediaType = "text/plain".toMediaTypeOrNull()
-        val body: RequestBody = "".toRequestBody(mediaType)
-        val request: Request = Request.Builder()
-            .url("https://ceshi.299597.xyz/api/v1/post/logout")
-            .method("POST", body)
-            .addHeader("token", "9260ce339e57a03c4db73bc0d0ef438fba608be8")
-            .build()
-        val response = client.newCall(request).execute()
-        return if(response.isSuccessful){
-            isLogin=false
-            true
-        } else
-            false*/
-        isLogin=false
+        thread {
+            val client = OkHttpClient().newBuilder()
+                .build()
+            val mediaType = "text/plain".toMediaTypeOrNull()
+            val body: RequestBody = "".toRequestBody(mediaType)
+            val request: Request = Request.Builder()
+                .url("https://ceshi.299597.xyz/api/v1/post/logout")
+                .method("POST", body)
+                .addHeader("token", "9260ce339e57a03c4db73bc0d0ef438fba608be8")
+                .build()
+            val response = client.newCall(request).execute()
+            Log.d("login_network", response.body!!.string())
+            if(response.isSuccessful){
+                "注销成功！".showToast(AllApplication.context)
+            }
+        }
         return true
     }
 
