@@ -2,21 +2,33 @@ package ttpicshk.tk.SkillCircle
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.JsonToken
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import ttpicshk.tk.SkillCircle.AllApplication.Companion.context
 import ttpicshk.tk.SkillCircle.databinding.LoginLayoutBinding
 import ttpicshk.tk.SkillCircle.databinding.LoginLayoutCreateUserBinding
 import ttpicshk.tk.SkillCircle.databinding.LoginLayoutUseMessageBinding
+import java.io.IOException
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
+import kotlin.properties.Delegates
+
 
 
 class LogInActivity : AppCompatActivity() {
@@ -145,6 +157,7 @@ class LogInActivity : AppCompatActivity() {
                 showPolicy(this,binding.checkedAgreePolicy)
             }
             else{
+                Loading.start(this)
                 loginUserName(binding.userNameText.text.toString(),
                     binding.passwordText.text.toString())
             }
@@ -159,12 +172,14 @@ class LogInActivity : AppCompatActivity() {
             }
             else{
                 if(messageLoginState==0){
+                    Loading.start(this)
                     sendMessage(binding2.userNameText.text.toString())
                 }else {
                     if(binding2.CodeText.text.length<4)
                     {
                         "请输入正确的验证码！".showToast(AllApplication.context)
                     }else{
+                        Loading.start(this)
                     loginPhoneNumber(binding2.userNameText.text.toString(),
                         binding2.CodeText.text.toString())
                     }
@@ -182,6 +197,7 @@ class LogInActivity : AppCompatActivity() {
                             showPolicy(this,binding3.checkedAgreePolicy)
                         }
                         else{
+                            Loading.start(this)
                             createUserLogin(binding3.userNameText.text.toString(),
                             binding3.passwordText.text.toString(),
                                 binding3.passwordTextConfirm.text.toString())
@@ -237,42 +253,110 @@ class LogInActivity : AppCompatActivity() {
         binding3.problemButtonLogin.setOnClickListener {
             "问题是啥子？".showToast(this)
         }
+    }
 
+    val handler=object:Handler(Looper.getMainLooper()){
+        override fun handleMessage(msg: Message) {
+            Loading.stop()
+            val data:messageJson= msg.obj as messageJson
+            when(msg.arg1){
+                0->{"连接失败！".showToast(context)}
+                1->{//login username
+                    if(data.errorCode!=0){
+                        "Oops! 登陆失败，原因为：${data.msg}".showToast(AllApplication.context)
+                    }else{
+                        runOnUiThread { "登陆成功！".showToast(AllApplication.context) }
+                        Account.token= data.data.token
+                        finish()
+                    }
+                }
+                2->{//send message
+                    if(data.errorCode!=0){
+                        "Oops! 发送失败，错误原因：${data.msg}".showToast(AllApplication.context)
+                    }
+                    else{
+                        runOnUiThread {
+                            "发送成功，验证码是 ${data.data.code}".showToast(AllApplication.context,Toast.LENGTH_LONG);
+                            binding2.messageFrameLogin.visibility = View.VISIBLE
+                            messageLoginState = 1
+                            binding2.buttonLogin.text="用短信验证码登录"
+                        }
+                    }
+                }
+                3->{//login phoneNumber
+                    if(data.errorCode!=0){
+                        "Oops!登陆失败,请重试！错误原因: ${data.msg}".showToast(AllApplication.context)
+                    }
+                    else{
+                        Account.token= data.data.token
+                         "登陆成功！".showToast(AllApplication.context)
+                        finish()
+                    }
+                }
+                4->{
+                    if(data.errorCode!=0){
+                        runOnUiThread { "注册失败，请重试，错误原因：${data.msg}".showToast(AllApplication.context) }
+                    }else{
+                        toLoginUseUsernameAndPassword()
+                        "注册成功！".showToast(AllApplication.context)
+                    }
 
+                }
+            }
+        }
     }
 
     private fun createUserLogin(username: String,password: String,passwordR:String) {
         thread {
-            Log.d("login_network","start")
+            Log.d("login_network", "start")
             val client = OkHttpClient().newBuilder()
                 .build()
             val mediaType: MediaType? = "text/plain".toMediaTypeOrNull()
             val body: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart("username", username)
                 .addFormDataPart("password", password)
-                .addFormDataPart("repassword",passwordR)
+                .addFormDataPart("repassword", passwordR)
                 .build()
             val request: Request = Request.Builder()
                 .url("https://ceshi.299597.xyz/api/v1/user/reg")
                 .method("POST", body)
                 .build()
-            val response: Response = client.newCall(request).execute()
-            Log.d("login_network",response.body!!.string())
-            if (response.isSuccessful){
-                runOnUiThread { toLoginUseUsernameAndPassword() }
-            }
-            else
-            {
-                runOnUiThread { "注册失败，请重试".showToast(AllApplication.context) }
-            }
 
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    val msg = Message()
+                    msg.arg1 = 0
+                    msg.obj = messageJson()
+                    handler.sendMessage(msg)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val data = response.body!!.string()
+                    Log.d("login_network", data)
+                    val gson = Gson()
+                    val message = gson.fromJson(data, messageJson::class.java)
+                    val msg = Message()
+                    msg.arg1 = 4
+                    msg.obj = message
+                    handler.sendMessage(msg)
+                }
+            })
         }
     }
 
+    inner class messageJson(){
+        lateinit var msg:String
+        var errorCode:Int=0
+        var data=Data()
+        inner class Data {
+            var code:Int=0
+            var token:String=""
+        }
+    }
     private fun sendMessage(phone: String) {
         thread {
             Log.d("login_network", "start")
-            val client = OkHttpClient().newBuilder()
+            val client = OkHttpClient().newBuilder().connectTimeout(3,TimeUnit.SECONDS)
                 .build()
             val mediaType: MediaType? = "text/plain".toMediaTypeOrNull()
             val body: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -282,21 +366,29 @@ class LogInActivity : AppCompatActivity() {
                 .url("https://ceshi.299597.xyz/api/v1/user/sendcode")
                 .method("POST", body)
                 .build()
-            val response: Response = client.newCall(request).execute()
-            Log.d("login_network", response.body!!.string())
-            if (response.isSuccessful) {
-                runOnUiThread {
-                    "发送成功".showToast(AllApplication.context);
-                    binding2.messageFrameLogin.visibility = View.VISIBLE
-                    messageLoginState = 1}
-            } else {
-               runOnUiThread { "Oops! 发送失败，请检查手机号码重试".showToast(AllApplication.context)}
-            }
+            client.newCall(request).enqueue(object: Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    val msg=Message()
+                    msg.arg1=0
+                    msg.obj=messageJson()
+                    handler.sendMessage(msg)
+                }
+                override fun onResponse(call: Call, response: Response) {
+                    val data=response.body!!.string()
+                    Log.d("login_network",data)
+                    val gson = Gson()
+                    val message = gson.fromJson(data, messageJson::class.java)
+                    val msg = Message()
+                    msg.arg1 = 2
+                    msg.obj = message
+                    handler.sendMessage(msg)
+                }
+            })
         }
     }
     private fun loginPhoneNumber(phone: String, code: String) {
         thread {
-            val client = OkHttpClient().newBuilder()
+            val client = OkHttpClient().newBuilder().connectTimeout(3,TimeUnit.SECONDS)
                 .build()
             val mediaType: MediaType? = "text/plain".toMediaTypeOrNull()
             val body: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -307,48 +399,72 @@ class LogInActivity : AppCompatActivity() {
                 .url("https://ceshi.299597.xyz/api/v1/user/phonelogin")
                 .method("POST", body)
                 .build()
-            val response: Response = client.newCall(request).execute()
-            Log.d("login_network",response.body!!.string())
-            if(response.isSuccessful){
-                Account.LogIn("0","0",phone)
-                runOnUiThread { "登陆成功！".showToast(AllApplication.context) }
-                finish()
-            }else {
-                runOnUiThread { "错误的验证码".showToast(AllApplication.context) }
-            }
+
+            client.newCall(request).enqueue(object: Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    val msg=Message()
+                    msg.arg1=0
+                    msg.obj=messageJson()
+                    handler.sendMessage(msg)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val data=response.body!!.string()
+                    Log.d("login_network",data)
+                    val gson = Gson()
+                    val message = gson.fromJson(data, messageJson::class.java)
+                    val msg = Message()
+                    msg.arg1 = 3
+                    msg.obj = message
+                    handler.sendMessage(msg)
+                    if(response.isSuccessful){
+                        Account.LogIn("0","0",phone)
+                    }
+                }
+            })
         }
     }
     private fun loginUserName(username: String, password: String) {
         thread {
-            try {
-            Log.d("login_network","start")
-                val client = OkHttpClient().newBuilder()
-                    .build()
-                val mediaType: MediaType? = "text/plain".toMediaTypeOrNull()
-                val body: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                    .addFormDataPart("username", username)
-                    .addFormDataPart("password", password)
-                    .build()
-                val request: Request = Request.Builder()
-                    .url("https://ceshi.299597.xyz/api/v1/user/login")
-                    .method("POST", body)
-                    .build()
-                val response: Response = client.newCall(request).execute()
-                Log.d("login_network",response.body!!.string())
-                if (response.isSuccessful){
-                    Account.LogIn(username,password,"0")
-                    runOnUiThread { "登陆成功！".showToast(AllApplication.context) }
-                    finish()
+            Log.d("login_network", "start")
+            val client = OkHttpClient().newBuilder().connectTimeout(3,TimeUnit.SECONDS)
+                .build()
+            val mediaType: MediaType? = "text/plain".toMediaTypeOrNull()
+            val body: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("username", username)
+                .addFormDataPart("password", password)
+                .build()
+            val request: Request = Request.Builder()
+                .url("https://ceshi.299597.xyz/api/v1/user/login")
+                .method("POST", body)
+                .build()
+
+            client.newCall(request).enqueue(object: Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    val msg = Message()
+                    msg.arg1 = 0
+                    msg.obj = messageJson()
+                    handler.sendMessage(msg)
                 }
-                else
-                {
-                    runOnUiThread { "账号或密码错误".showToast(AllApplication.context) }
-                }}catch (e:Exception){e.printStackTrace()}
+
+                override fun onResponse(call: Call, response: Response) {
+                    val data = response.body!!.string()
+                    Log.d("login_network", data)
+                    val gson = Gson()
+                    val message = gson.fromJson(data, messageJson::class.java)
+                    val msg = Message()
+                    msg.arg1 = 1
+                    msg.obj = message
+                    handler.sendMessage(msg)
+                    if (response.isSuccessful) {
+                        Account.LogIn(username, password, "0")
+                    }
+                }
+            })
         }
     }
 
-
-
+    //界面跳转
     private fun toLoginUseUsernameAndPassword(){
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)

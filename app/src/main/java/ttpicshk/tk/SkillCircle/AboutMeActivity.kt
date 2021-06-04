@@ -5,20 +5,26 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Message
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.pictureselector.GlideEngine
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import ttpicshk.tk.SkillCircle.databinding.AboutMeAccountSettingsBinding
 import ttpicshk.tk.SkillCircle.databinding.AboutMeLayoutBinding
 import ttpicshk.tk.SkillCircle.databinding.AboutMeSettingsMoreBinding
 import ttpicshk.tk.SkillCircle.databinding.AboutMeSettingsPersonalInfoBinding
+import java.io.IOException
 import kotlin.concurrent.thread
 
 class AboutMeActivity : AppCompatActivity() {
@@ -43,7 +49,10 @@ class AboutMeActivity : AppCompatActivity() {
             finish()
             startActivity(Intent(this,LogInActivity::class.java))
         }
-
+        else{
+            Loading.start(this)
+            load()
+        }
         setSupportActionBar(binding.toolbarAboutMe)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.collapseToolBarAboutMe.title=Account.userName()
@@ -96,7 +105,7 @@ class AboutMeActivity : AppCompatActivity() {
         }
 
         bindingSettingsMore.aboutMeLogout.setOnClickListener {
-                Account.LogOut()
+            Account.LogOut()
             "退出登录，请重新登陆".showToast(AllApplication.context)
             finish()
         }
@@ -171,5 +180,38 @@ class AboutMeActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun load(){
+        thread {
+            Log.d("login_network", "start")
+            val client = OkHttpClient().newBuilder()
+                .build()
+            val request: Request = Request.Builder()
+                .url("https://ceshi.299597.xyz/api/v1/user/getuserinfo")
+                //.url("http://ceshi.299597.xyz/api/v1/post/339")
+                .method("GET",null)
+                .addHeader("token",Account.token)
+                .build()
+
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    Loading.stop()
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val data = response.body!!.string()
+                    Log.d("login_network", data)
+                    val gson = Gson()
+                    //val message = gson.fromJson(data, LogInActivity.messageJson::class.java)
+                    Loading.stop()
+                }
+            })
+
+            val response: Response = client.newCall(request).execute()
+            val data=response.body!!.string()
+            Log.d("login_network",data)
+        }
     }
 }

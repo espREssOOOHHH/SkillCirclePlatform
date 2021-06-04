@@ -22,7 +22,7 @@ object Account{
     private var email="xxyyy@ss.com"
     private var phone="0000000000000"
     private var photoBg:Uri=Uri.parse("https://tse4-mm.cn.bing.net/th/id/OIP.gH3rAGvlRDPBfEtlbRHVzgHaEo?w=234&h=180&c=7&o=5&dpr=2&pid=1.7")
-    lateinit var token: JsonToken
+    lateinit var token: String
 
     fun userName():String= userName
     fun userPhoto(photo:Uri?=null):Uri{
@@ -65,14 +65,14 @@ object Account{
             val mediaType = "text/plain".toMediaTypeOrNull()
             val body: RequestBody = "".toRequestBody(mediaType)
             val request: Request = Request.Builder()
-                .url("https://ceshi.299597.xyz/api/v1/post/logout")
+                .url("https://ceshi.299597.xyz/api/v1/user/logout")
                 .method("POST", body)
-                .addHeader("token", "9260ce339e57a03c4db73bc0d0ef438fba608be8")
+                .addHeader("token", token)
                 .build()
             val response = client.newCall(request).execute()
             Log.d("login_network", response.body!!.string())
             if(response.isSuccessful){
-                "注销成功！".showToast(AllApplication.context)
+                isLogin=false
             }
         }
         return true
