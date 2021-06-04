@@ -84,7 +84,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/about_me_idBtn"
+        android:id="@+id/about_me_locationBtn"
         android:padding="5dp">
         <TextView
             android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/about_me_id"
+            android:id="@+id/about_me_location"
             android:layout_marginEnd="30dp"
             android:layout_marginStart="80dp"
             android:textSize="16sp"

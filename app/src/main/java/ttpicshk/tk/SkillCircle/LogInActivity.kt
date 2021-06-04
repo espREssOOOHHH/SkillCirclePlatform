@@ -55,7 +55,7 @@ class LogInActivity : AppCompatActivity() {
 
         //stub 仅供测试用
         binding.logoLogin.setOnClickListener {
-            Account.LogIn("王琳琳","10293221","123938231203")
+            Account.LogIn("dfd9e3713a1caea36fd4cf52f15331a7de5c9d1d")
             finish()
         }
 
@@ -266,7 +266,7 @@ class LogInActivity : AppCompatActivity() {
                         "Oops! 登陆失败，原因为：${data.msg}".showToast(AllApplication.context)
                     }else{
                         runOnUiThread { "登陆成功！".showToast(AllApplication.context) }
-                        Account.token= data.data.token
+                        Account.LogIn(data.data.token)
                         finish()
                     }
                 }
@@ -288,7 +288,7 @@ class LogInActivity : AppCompatActivity() {
                         "Oops!登陆失败,请重试！错误原因: ${data.msg}".showToast(AllApplication.context)
                     }
                     else{
-                        Account.token= data.data.token
+                        Account.LogIn(data.data.token)
                          "登陆成功！".showToast(AllApplication.context)
                         finish()
                     }
@@ -417,9 +417,6 @@ class LogInActivity : AppCompatActivity() {
                     msg.arg1 = 3
                     msg.obj = message
                     handler.sendMessage(msg)
-                    if(response.isSuccessful){
-                        Account.LogIn("0","0",phone)
-                    }
                 }
             })
         }
@@ -456,9 +453,6 @@ class LogInActivity : AppCompatActivity() {
                     msg.arg1 = 1
                     msg.obj = message
                     handler.sendMessage(msg)
-                    if (response.isSuccessful) {
-                        Account.LogIn(username, password, "0")
-                    }
                 }
             })
         }

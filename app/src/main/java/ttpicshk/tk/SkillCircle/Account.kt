@@ -12,18 +12,36 @@ import kotlin.concurrent.thread
 object Account{
     private var userName ="user"
     private var passWord=String()
+    private var userId=0
     private var phoneNumber= String()
     private var isLogin=false
     private var photoUser:Uri=Uri.parse("https://pic1.zhimg.com/v2-5ec0fb527c389530021ec2c911875165_r.jpg?source=1940ef5c")
     private var signature="fuck U asshole"
     private var birthday="2013-02-10"
+    private var age=29
     private var gender=2
-    private var id="0"
+    private var occupation=""
+    private var location=""
+    private var id=0
+    private var EmotionalState=0
     private var email="xxyyy@ss.com"
     private var phone="0000000000000"
     private var photoBg:Uri=Uri.parse("https://tse4-mm.cn.bing.net/th/id/OIP.gH3rAGvlRDPBfEtlbRHVzgHaEo?w=234&h=180&c=7&o=5&dpr=2&pid=1.7")
     lateinit var token: String
 
+    fun setPersonalInfo(id_:Int,userId_:Int,userName_:String?,age_:Int,sex_:Int,gq:Int,job:String?,path:String?,
+    birthday_:String?,signature_:String?){
+        id=id_
+        userName=userName_?: userName
+        userId=userId_
+        age=age_
+        EmotionalState=gq
+        gender=sex_
+        occupation=job?: occupation
+        location=path?: location
+        birthday=birthday_?: birthday
+        signature=signature_?: signature
+    }
     fun userName():String= userName
     fun userPhoto(photo:Uri?=null):Uri{
         if(photo!=null)
@@ -32,9 +50,11 @@ object Account{
     }
     fun signature():String= signature
     fun birthday():String= birthday
-    fun id():String=id
+    fun id()= id
     fun email():String=email
     fun phone():String=phone
+    fun age():Int=age
+    fun location()= location
     fun userBackGround(photo: Uri?=null):Uri{
         if(photo!=null)
             photoBg=photo
@@ -51,11 +71,9 @@ object Account{
         return backValue
     }
 
-    fun LogIn(username:String,password:String,phone:String){
+    fun LogIn(tokens:String){
+        token=tokens
         isLogin=true
-        userName=username
-        passWord=password
-        phoneNumber=phone
     }
 
     fun LogOut():Boolean{

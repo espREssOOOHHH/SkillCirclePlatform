@@ -40,6 +40,15 @@
                 android:fitsSystemWindows="true"
                 android:layout_gravity="bottom|end"
                 app:layout_collapseMode="parallax"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textSize="14sp"
+                android:padding="3dp"
+                android:textColor="@color/white"
+                android:paddingStart="5dp"
+                android:id="@+id/subtitle_about_me" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_aboutMe"
@@ -52,7 +61,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout

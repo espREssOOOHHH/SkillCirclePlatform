@@ -33,10 +33,12 @@
     <string name="about_me_settings_more_1">注销</string>
     <string name="about_me_settings_more_2">用户中心</string>
     <string name="about_me_personal_info_1">昵称</string>
-    <string name="about_me_personal_info_2">ID</string>
+    <string name="about_me_personal_info_2">地区</string>
     <string name="about_me_personal_info_3">性别</string>
     <string name="about_me_personal_info_4">生日</string>
     <string name="about_me_personal_info_5">个性签名</string>
     <string name="about_me_personal_info_6">修改头像</string>
     <string name="about_me_personal_info_7">修改主页背景</string>
+    <string name="dialog_change_personal_info_1">提交</string>
+    <string name="dialog_change_personal_info_2">放弃</string>
 </resources>

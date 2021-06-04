@@ -50,6 +50,7 @@ class HomePage:AppCompatActivity() {
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_aboutMe->startActivity(Intent(this,AboutMeActivity::class.java))
+                R.id.nav_settings->startActivity(Intent(this,SettingPage::class.java))
 
             }
             binding.drawerLayout.closeDrawers()
