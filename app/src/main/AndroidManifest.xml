@@ -10,12 +10,12 @@
     <application
         android:name=".AllApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/skill_share_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/skill_share_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkillCirclePlatform">
-        <activity android:name=".SettingPage"></activity>
+        <activity android:name=".SettingPage" />
         <activity android:name=".WriteArticle" />
         <activity
             android:name=".ArticleDetail"
@@ -26,7 +26,6 @@
             android:theme="@style/DetailPageTheme" />
         <activity
             android:name=".HomePage"
-            android:label="MainPage"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait">
             <intent-filter>

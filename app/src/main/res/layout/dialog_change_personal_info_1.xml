@@ -18,9 +18,21 @@
             android:id="@+id/title_dialog_personalInfo1"
             android:textSize="24sp"
             android:fontFamily="sans-serif-black"
-            android:text="昵称"
             android:textAlignment="center"/>
+        <DatePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/datePicker_dialog_personalInfo1"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:visibility="gone"
+            android:id="@+id/genderSelect_dialog_personalInfo1"
+            android:spinnerMode="dropdown"/>
         <EditText
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:maxLines="1"
@@ -29,8 +41,7 @@
             android:textSize="20sp"
             android:textAlignment="center"
             android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:text="王小明啊啊22222"/>
+            android:layout_marginRight="25dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -49,9 +49,9 @@ class LogInActivity : AppCompatActivity() {
         toLoginUseUsernameAndPassword()
 
         //头像
-        Glide.with(AllApplication.context).load(Account.userPhoto()).into(binding.logoLogin)
-        Glide.with(AllApplication.context).load(Account.userPhoto()).into(binding2.logoLogin)
-        Glide.with(AllApplication.context).load(Account.userPhoto()).into(binding3.logoLogin)
+        Glide.with(context).load(R.drawable.logo).into(binding.logoLogin)
+        Glide.with(context).load(R.drawable.logo).into(binding2.logoLogin)
+        Glide.with(context).load(R.drawable.logo).into(binding3.logoLogin)
 
         //stub 仅供测试用
         binding.logoLogin.setOnClickListener {

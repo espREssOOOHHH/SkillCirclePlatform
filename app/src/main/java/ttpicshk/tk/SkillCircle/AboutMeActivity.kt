@@ -5,14 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Message
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
@@ -23,69 +20,70 @@ import com.luck.picture.lib.config.PictureMimeType
 import com.luck.pictureselector.GlideEngine
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import ttpicshk.tk.SkillCircle.AllApplication.Companion.context
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import ttpicshk.tk.SkillCircle.databinding.AboutMeAccountSettingsBinding
 import ttpicshk.tk.SkillCircle.databinding.AboutMeLayoutBinding
 import ttpicshk.tk.SkillCircle.databinding.AboutMeSettingsMoreBinding
 import ttpicshk.tk.SkillCircle.databinding.AboutMeSettingsPersonalInfoBinding
+import java.io.File
 import java.io.IOException
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
+
 class AboutMeActivity : AppCompatActivity() {
-    lateinit var binding:AboutMeLayoutBinding
-    lateinit var bindingPersonalInfo:AboutMeSettingsPersonalInfoBinding
-    lateinit var bindingAccountSettings:AboutMeAccountSettingsBinding
+    lateinit var binding: AboutMeLayoutBinding
+    lateinit var bindingPersonalInfo: AboutMeSettingsPersonalInfoBinding
+    lateinit var bindingAccountSettings: AboutMeAccountSettingsBinding
     lateinit var bindingSettingsMore: AboutMeSettingsMoreBinding
 
-    var modePictureSelector=1
+    var modePictureSelector = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= AboutMeLayoutBinding.inflate(layoutInflater)
+        binding = AboutMeLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        bindingPersonalInfo=binding.aboutMeSettingsPersonalInfo
-        bindingAccountSettings=binding.aboutMeAccountSettings
-        bindingSettingsMore=binding.aboutMeSettingsMore
+        bindingPersonalInfo = binding.aboutMeSettingsPersonalInfo
+        bindingAccountSettings = binding.aboutMeAccountSettings
+        bindingSettingsMore = binding.aboutMeSettingsMore
 
-        if(!Account.IsOnLine())
-        {
+        if (!Account.IsOnLine()) {
             "请先登录".showToast(this)
             finish()
-            startActivity(Intent(this,LogInActivity::class.java))
+            startActivity(Intent(this, LogInActivity::class.java))
+        } else {
+            load(this)
         }
-        else{
-            Loading.start(this)
-            load()
-        }
+
         setSupportActionBar(binding.toolbarAboutMe)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.collapseToolBarAboutMe.title=Account.userName()
+        binding.collapseToolBarAboutMe.title = Account.userName()
         Glide.with(this).load(Account.userBackGround()).into(binding.userPhotoBGAboutMe)
         Glide.with(AllApplication.context).load(Account.userPhoto()).into(binding.userPhotoAboutMe)
         binding.userPhotoAboutMe.setOnClickListener {
-            val dialog= Dialog(this)
+            val dialog = Dialog(this)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setCancelable(true)
             dialog.setContentView(R.layout.photo_big_view)
-            val picture=dialog.findViewById<ImageView>(R.id.pictureViewDialog)
+            val picture = dialog.findViewById<ImageView>(R.id.pictureViewDialog)
             Glide.with(this).load(Account.userPhoto()).into(picture)
             dialog.show()
         }
         binding.userPhotoBGAboutMe.setOnClickListener {
-            val dialog= Dialog(this)
+            val dialog = Dialog(this)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setCancelable(true)
             dialog.setContentView(R.layout.photo_big_view)
-            val picture=dialog.findViewById<ImageView>(R.id.pictureViewDialog)
+            val picture = dialog.findViewById<ImageView>(R.id.pictureViewDialog)
             Glide.with(this).load(Account.userBackGround()).into(picture)
             dialog.show()
         }
 
-        refreshPersonalInfo()
-        bindingAccountSettings.aboutMePasswordSettingBtn.setOnClickListener{
+
+        bindingAccountSettings.aboutMePasswordSettingBtn.setOnClickListener {
             "设置密码".showToast(AllApplication.context)
-            refreshPersonalInfo()
         }
         bindingAccountSettings.aboutMePhoneBtn.setOnClickListener {
             "手机号".showToast(AllApplication.context)
@@ -109,30 +107,28 @@ class AboutMeActivity : AppCompatActivity() {
             finish()
         }
         bindingSettingsMore.aboutMeUserCenter.setOnClickListener {
-            val intent=Intent(Intent.ACTION_VIEW)
-            intent.data= Uri.parse("https://baidu.com")
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://baidu.com")
             startActivity(intent)
         }
         bindingPersonalInfo.aboutMeUsernameBtn.setOnClickListener {
-            changePersonalInfo(1,this)
+            changePersonalInfo(1, this)
         }
         bindingPersonalInfo.aboutMeLocationBtn.setOnClickListener {
-            changePersonalInfo(2,this)
+            changePersonalInfo(2, this)
         }
         bindingPersonalInfo.aboutMeBirthdayBtn.setOnClickListener {
-            "生日".showToast(AllApplication.context)
-        }
-        bindingPersonalInfo.aboutMeGenderBtn.setOnClickListener {
-            "性别".showToast(AllApplication.context)
-        }
-        bindingPersonalInfo.aboutMeBirthdayBtn.setOnClickListener {
+            changePersonalInfo(4,this)
 
         }
+        bindingPersonalInfo.aboutMeGenderBtn.setOnClickListener {
+            changePersonalInfo(5,this)
+        }
         bindingPersonalInfo.aboutMeSignatureBtn.setOnClickListener {
-            changePersonalInfo(3,this)
+            changePersonalInfo(3, this)
         }
         bindingPersonalInfo.aboutMeUserPhotoBtn.setOnClickListener {
-            modePictureSelector=1
+            modePictureSelector = 1
             PictureSelector.create(this)
                 .openGallery(PictureMimeType.ofImage())
                 .theme(R.style.Theme_SkillCirclePlatform)
@@ -149,42 +145,94 @@ class AboutMeActivity : AppCompatActivity() {
                 .maxSelectNum(1)
                 .minSelectNum(1)
                 .forResult(PictureConfig.CHOOSE_REQUEST)
-            modePictureSelector=0
+            modePictureSelector = 0
         }
     }
 
-    private fun changePersonalInfo(type:Int,context: Context) {
-        val dialog= Dialog(context)
+    private fun changePersonalInfo(type: Int, context: Context) {
+        val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.dialog_change_personal_info_1)
-        val title=dialog.findViewById<TextView>(R.id.title_dialog_personalInfo1)
-        val text=dialog.findViewById<EditText>(R.id.text_dialog_personalInfo1)
-        val commit=dialog.findViewById<Button>(R.id.submit_dialog_personalInfo1)
-        val cancel=dialog.findViewById<Button>(R.id.cancel_dialog_personalInfo1)
-
-        when(type){//1:userName 2:location 3:signature
-            1->{
-                title.text="一个新的昵称哟"
+        val datePicker = dialog.findViewById<DatePicker>(R.id.datePicker_dialog_personalInfo1)
+        val title = dialog.findViewById<TextView>(R.id.title_dialog_personalInfo1)
+        val text = dialog.findViewById<EditText>(R.id.text_dialog_personalInfo1)
+        val commit = dialog.findViewById<Button>(R.id.submit_dialog_personalInfo1)
+        val cancel = dialog.findViewById<Button>(R.id.cancel_dialog_personalInfo1)
+        val today = Calendar.getInstance()
+        datePicker.init(
+            today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+            today.get(Calendar.DAY_OF_MONTH)
+        ) { _, year, month, day ->}
+        val spinner=dialog.findViewById<Spinner>(R.id.genderSelect_dialog_personalInfo1)
+        var gender=""
+        when (type) {//1:userName 2:location 3:signature 4:birthday 5:性别
+            1 -> {
+                text.visibility = View.VISIBLE
+                title.text = "一个新的昵称哟"
             }
-            2->{
-                title.text="经常在哪里🗺出没？"
+            2 -> {
+                text.visibility = View.VISIBLE
+                title.text = "经常在哪里🗺出没？"
             }
-            3->{
-                title.text="🖊新的签名哟"
+            3 -> {
+                text.visibility = View.VISIBLE
+                title.text = "🖊新的签名哟"
+            }
+            4 -> {
+                datePicker.visibility = View.VISIBLE
+                title.text = "在什么时候🎂出生呢？"
+            }
+            5->{
+                spinner.visibility=View.VISIBLE
+                val spinnerOption=arrayOf("🚹男","🚺女","🈲保密")
+                spinner.adapter=ArrayAdapter(context,
+                    android.R.layout.simple_spinner_dropdown_item,spinnerOption)
+                spinner.onItemSelectedListener=object : AdapterView.OnItemClickListener,
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemClick(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        gender=position.toString()
+                    }
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        gender=position.toString()
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?){}
+                }
             }
         }
         cancel.setOnClickListener {
             dialog.dismiss()
         }
         commit.setOnClickListener {
-            Loading.start(this)
-            commitPersonalInfo(type,text.text.toString(),context)
+            when (type) {
+                4 -> {
+                    val selectDate:String="${datePicker.year}-${datePicker.month}-${datePicker.dayOfMonth}"
+                    Loading.start(this)
+                    commitPersonalInfo(type, selectDate, context, dialog)
+                }
+                5->{
+                    Loading.start(this)
+                    commitPersonalInfo(type, gender, context, dialog)
+                }
+                else -> {
+                    Loading.start(this)
+                    commitPersonalInfo(type, text.text.toString(), context, dialog)
+                }
+            }
         }
         dialog.show()
-
     }
-    private fun commitPersonalInfo(type:Int,data:String,context: Context){
+    private fun commitPersonalInfo(type: Int, data: String, context: Context, dialog: Dialog){
         thread {
             Log.d("login_network", "start")
             val client = OkHttpClient().newBuilder().connectTimeout(3, TimeUnit.SECONDS)
@@ -193,28 +241,72 @@ class AboutMeActivity : AppCompatActivity() {
             val bodyT= MultipartBody.Builder().setType(MultipartBody.FORM)
             val body:RequestBody =
                 when(type){
-                1->{
-                    bodyT.addFormDataPart("name",data)
+                1->{//1:userName 2:location 3:signature 4:birthday
+                    bodyT.addFormDataPart("nickname",data)
+                        .addFormDataPart("name",data)
+                        .addFormDataPart("signature",Account.signature())
+                        .addFormDataPart("birthday",Account.birthday())
+                        .addFormDataPart("path",Account.location())
+                        .addFormDataPart("age",Account.age().toString())
+                        .addFormDataPart("qg",Account.EmotionalState().toString())
+                        .addFormDataPart("sex", Account.genderDigit().toString())
+                        .addFormDataPart("job",Account.occupation())
                         .build()
                 }
                 2->{
-                    bodyT.addFormDataPart("location",data)
+                    bodyT.addFormDataPart("path",data)
+                        .addFormDataPart("nickname",Account.userName())
+                        .addFormDataPart("name",Account.userName())
+                        .addFormDataPart("signature",Account.signature())
+                        .addFormDataPart("birthday",Account.birthday())
+                        .addFormDataPart("age",Account.age().toString())
+                        .addFormDataPart("qg",Account.EmotionalState().toString())
+                        .addFormDataPart("sex", Account.genderDigit().toString())
+                        .addFormDataPart("job",Account.occupation())
                         .build()
                 }
                 3->{
                     bodyT.addFormDataPart("signature",data)
+                        .addFormDataPart("path",Account.location())
+                        .addFormDataPart("nickname",Account.userName())
+                        .addFormDataPart("name",Account.userName())
+                        .addFormDataPart("birthday",Account.birthday())
+                        .addFormDataPart("age",Account.age().toString())
+                        .addFormDataPart("qg",Account.EmotionalState().toString())
+                        .addFormDataPart("sex", Account.genderDigit().toString())
+                        .addFormDataPart("job",Account.occupation())
                         .build()
                 }
                 4->{
                     bodyT.addFormDataPart("birthday",data)
+                        .addFormDataPart("path",Account.location())
+                        .addFormDataPart("nickname",Account.userName())
+                        .addFormDataPart("name",Account.userName())
+                        .addFormDataPart("signature",Account.signature())
+                        .addFormDataPart("age",Account.age().toString())
+                        .addFormDataPart("qg",Account.EmotionalState().toString())
+                        .addFormDataPart("sex", Account.genderDigit().toString())
+                        .addFormDataPart("job",Account.occupation())
                         .build()
                 }
+                    5->{
+                        bodyT.addFormDataPart("birthday",Account.birthday())
+                            .addFormDataPart("path",Account.location())
+                            .addFormDataPart("nickname",Account.userName())
+                            .addFormDataPart("name",Account.userName())
+                            .addFormDataPart("signature",Account.signature())
+                            .addFormDataPart("age",Account.age().toString())
+                            .addFormDataPart("qg",Account.EmotionalState().toString())
+                            .addFormDataPart("sex", data)
+                            .addFormDataPart("job",Account.occupation())
+                            .build()
+                    }
                 else->{
                     bodyT.build()
                 }
             }
             val request: Request = Request.Builder()
-                .url("https://ceshi.299597.xyz/api/v1/user/edituserinfo")
+                .url("https://ceshi.299597.xyz/api/v1/edituserinfo")
                 .method("POST", body)
                 .addHeader("token",Account.token)
                 .build()
@@ -228,16 +320,80 @@ class AboutMeActivity : AppCompatActivity() {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
+                    val data = response.body!!.string()
+                    Log.d("login_network", data)
+                    val gson = Gson()
+                    val message = gson.fromJson(data, dataJsonS::class.java)
                     runOnUiThread {
-                        "提交成功！".showToast(context)
+                        if(message.errorCode!=0){
+                            "修改错误！错误原因是：${message.msg}".showToast(context)
+                        }else{
+                            "提交成功！".showToast(context)
+                        }
+                        dialog.dismiss()
                         Loading.stop()
-                        refreshPersonalInfo()
+                        if((message.errorCode==0) or (message.msg == "修改成功"))
+                            load(context)
                     }
                 }
             })
         }
     }
 
+    //不一定能用
+    private fun commitPhoto(type:Int,context: Context) {
+        thread {//type=1:头像 2:背景
+            val photo: Uri = when (type) {
+                1 -> Account.userPhoto()
+                else -> Account.userBackGround()
+            }
+            val website: String = when (type) {
+                1 -> "https://ceshi.299597.xyz/api/v1/edituserpic"
+                else -> " "
+            }
+
+            Log.d("login_network", "start")
+            val client = OkHttpClient().newBuilder().connectTimeout(3, TimeUnit.SECONDS)
+                .build()
+            val mediaType: MediaType? = "text/plain".toMediaTypeOrNull()
+            val body: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart(
+                    "userpic", "head.png",
+                    File(photo.path!!)
+                        .asRequestBody("application/octet-stream".toMediaTypeOrNull())
+                )
+                .build()
+            val request: Request = Request.Builder()
+                .url(website)
+                .method("POST", body)
+                .addHeader("token", Account.token)
+                .build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    runOnUiThread {
+                        "提交失败！请重试".showToast(AllApplication.context)
+                        Loading.stop()
+                    }
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val data = response.body!!.string()
+                    Log.d("login_network", data)
+                    val gson = Gson()
+                    val message = gson.fromJson(data, dataJsonS::class.java)
+                    runOnUiThread {
+                        if (message.errorCode != 0) {
+                            "修改错误！错误原因是：${message.msg}".showToast(context)
+                        } else {
+                            "提交成功！".showToast(context)
+                        }
+                        if ((message.errorCode == 0) or (message.msg == "修改成功"))
+                            load(context)
+                    }
+                }
+            })
+        }
+    }
     private fun refreshPersonalInfo() {
         binding.collapseToolBarAboutMe.title=Account.userName()
         binding.subtitleAboutMe.text="id:"+Account.id().toString()
@@ -253,6 +409,7 @@ class AboutMeActivity : AppCompatActivity() {
     inner class dataJson{
         var msg:String=""
         var data=Data()
+        var errorCode=0
         inner class Data{
             lateinit var list:List<list>
         }
@@ -268,9 +425,26 @@ class AboutMeActivity : AppCompatActivity() {
             val signature:String=""
             var nickname:String? = null
         }
-
     }
-    fun load(){
+    inner class dataJsonS{
+        var msg:String=""
+        var errorCode=0
+        lateinit var data:List<list>
+        inner class list{
+            val id = 0
+            val user_id = 0
+            val age = 0
+            val sex = 0
+            val qg = 0//情感状况
+            val job: String?=null
+            val path: String=""//住址
+            val birthday: String=""
+            val signature:String=""
+            var nickname:String? = null
+        }
+    }
+    fun load(context: Context,refreshDisplay:Boolean=true){
+        if(refreshDisplay){ Loading.start(context)}
         thread {
             Log.d("login_network", "start")
             val client = OkHttpClient().newBuilder()
@@ -283,7 +457,7 @@ class AboutMeActivity : AppCompatActivity() {
                 .build()
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    Loading.stop()
+                    if(refreshDisplay){Loading.stop()}
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -291,12 +465,12 @@ class AboutMeActivity : AppCompatActivity() {
                     Log.d("login_network", data)
                     val gson = Gson()
                     val message = gson.fromJson(data, dataJson::class.java)
-                    Loading.stop()
+                    if(refreshDisplay){Loading.stop()}
                     Account.setPersonalInfo(message.data.list[0].id,message.data.list[0].user_id,
                         message.data.list[0].nickname,message.data.list[0].age,
                     message.data.list[0].sex,message.data.list[0].qg,message.data.list[0].job,
                         message.data.list[0].path,message.data.list[0].birthday,message.data.list[0].signature)
-                    runOnUiThread { refreshPersonalInfo() }
+                    if(refreshDisplay){runOnUiThread { refreshPersonalInfo() }}
                 }
             })
         }
@@ -309,6 +483,7 @@ class AboutMeActivity : AppCompatActivity() {
             if(modePictureSelector==1){
             Account.userPhoto(selectList[0].path.toUri())
             Glide.with(AllApplication.context).load(Account.userPhoto()).into(binding.userPhotoAboutMe)
+                commitPhoto(1,AllApplication.context)
             }
             else
             {

@@ -10,17 +10,17 @@ import kotlin.concurrent.thread
 
 
 object Account{
-    private var userName ="user"
+    private var userName ="独留清风醉"
     private var passWord=String()
     private var userId=0
     private var phoneNumber= String()
     private var isLogin=false
     private var photoUser:Uri=Uri.parse("https://pic1.zhimg.com/v2-5ec0fb527c389530021ec2c911875165_r.jpg?source=1940ef5c")
-    private var signature="fuck U asshole"
+    private var signature="誰卟媞戴着偽娤の緬具"
     private var birthday="2013-02-10"
     private var age=29
     private var gender=2
-    private var occupation=""
+    private var occupation="保密"
     private var location=""
     private var id=0
     private var EmotionalState=0
@@ -42,12 +42,15 @@ object Account{
         birthday=birthday_?: birthday
         signature=signature_?: signature
     }
+    fun occupation()= occupation
     fun userName():String= userName
     fun userPhoto(photo:Uri?=null):Uri{
         if(photo!=null)
             photoUser=photo
         return photoUser
     }
+    fun genderDigit()= gender
+    fun EmotionalState()= EmotionalState
     fun signature():String= signature
     fun birthday():String= birthday
     fun id()= id
