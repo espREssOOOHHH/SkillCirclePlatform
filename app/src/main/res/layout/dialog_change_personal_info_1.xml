@@ -53,11 +53,12 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:text="@string/dialog_change_personal_info_1"
+                android:text="@string/dialog_change_personal_info_2"
                 android:textSize="16sp"
                 android:padding="5dp"
-                android:id="@+id/submit_dialog_personalInfo1"/>
+                android:id="@+id/cancel_dialog_personalInfo1"
+                android:layout_weight="7"/>
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="5dp"
@@ -65,11 +66,11 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/dialog_change_personal_info_2"
+                android:layout_weight="7"
+                android:text="@string/dialog_change_personal_info_1"
                 android:textSize="16sp"
                 android:padding="5dp"
-                android:id="@+id/cancel_dialog_personalInfo1"
-                android:layout_weight="7"/>
+                android:id="@+id/submit_dialog_personalInfo1"/>
             <View
                 android:layout_width="0dp"
                 android:layout_height="5dp"

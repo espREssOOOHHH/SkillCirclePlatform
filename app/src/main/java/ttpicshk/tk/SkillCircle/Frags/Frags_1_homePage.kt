@@ -80,7 +80,7 @@ class Frags_1_homePage(var idFrag:Int):Fragment() {
         thread {
             Thread.sleep(1000)
             requireActivity().runOnUiThread{
-                Snackbar.make(binding.fabFrags,"Refreshed",Snackbar.LENGTH_SHORT)
+                Snackbar.make(binding.nestScrollViewFrags,"Refreshed",Snackbar.LENGTH_SHORT)
                     .setAction("Got it"){}
                     .show()
                 initArticle()
