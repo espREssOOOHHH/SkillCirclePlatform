@@ -53,13 +53,6 @@ class LogInActivity : AppCompatActivity() {
         Glide.with(context).load(R.drawable.logo).into(binding2.logoLogin)
         Glide.with(context).load(R.drawable.logo).into(binding3.logoLogin)
 
-        //stub 仅供测试用
-        binding.logoLogin.setOnClickListener {
-            Account.LogIn("dfd9e3713a1caea36fd4cf52f15331a7de5c9d1d")
-            finish()
-        }
-
-
         //输入框清空按钮
         binding.clearButtonUserNameLogin.setOnClickListener {
             binding.userNameText.text.clear()
@@ -221,28 +214,22 @@ class LogInActivity : AppCompatActivity() {
 
         //第三方登录
         binding.buttonWechatLogin.setOnClickListener {
-            "微信登录成功！".showToast(this)
-            finish()
+            "微信登录暂不支持，请使用其他方式".showToast(this)
         }
         binding2.buttonWechatLogin.setOnClickListener {
-            "微信登录成功！".showToast(this)
-            finish()
+            "微信登录暂不支持，请使用其他方式".showToast(this)
         }
         binding.buttonQqLogin.setOnClickListener {
-            "QQ登录成功！".showToast(this)
-            finish()
+            "QQ登录暂不支持，请使用其他方式！".showToast(this)
         }
         binding2.buttonQqLogin.setOnClickListener {
-            "QQ登录成功！".showToast(this)
-            finish()
+            "QQ登录暂不支持，请使用其他方式".showToast(this)
         }
         binding.buttonWeiboLogin.setOnClickListener {
-            "微博登录成功！".showToast(this)
-            finish()
+            "微博登录暂不支持，请使用其他方式！".showToast(this)
         }
         binding2.buttonWeiboLogin.setOnClickListener {
-            "微博登录成功！".showToast(this)
-            finish()
+            "微博登录暂不支持，请使用其他方式！".showToast(this)
         }
         binding.problemButtonLogin.setOnClickListener {
             "问题是啥子？".showToast(this)
@@ -344,7 +331,7 @@ class LogInActivity : AppCompatActivity() {
         }
     }
 
-    inner class messageJson(){
+    open inner class messageJson(){
         lateinit var msg:String
         var errorCode:Int=0
         var data=Data()

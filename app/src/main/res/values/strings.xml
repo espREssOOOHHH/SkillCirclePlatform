@@ -41,4 +41,9 @@
     <string name="about_me_personal_info_7">修改主页背景</string>
     <string name="dialog_change_personal_info_1">提交</string>
     <string name="dialog_change_personal_info_2">放弃</string>
+    <string name="settings_1">关于本应用</string>
+    <string name="settings_2">开发者</string>
+    <string name="settings_3">用户反馈</string>
+    <string name="settings_4">检查更新</string>
+    <string name="settings_5">清理缓存</string>
 </resources>

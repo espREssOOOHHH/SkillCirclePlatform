@@ -11,6 +11,7 @@ import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toFile
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -28,6 +29,8 @@ import ttpicshk.tk.SkillCircle.databinding.AboutMeSettingsMoreBinding
 import ttpicshk.tk.SkillCircle.databinding.AboutMeSettingsPersonalInfoBinding
 import java.io.File
 import java.io.IOException
+import java.io.InputStream
+import java.net.URI
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
@@ -349,17 +352,22 @@ class AboutMeActivity : AppCompatActivity() {
             }
             val website: String = when (type) {
                 1 -> "https://ceshi.299597.xyz/api/v1/edituserpic"
-                else -> " "
+                else -> "https://ceshi.299597.xyz/api/v1/editbackground"
             }
-
-            Log.d("login_network", "start")
+            val name:String=when(type){
+                1->"userpic"
+                else->"background"
+            }
+            val picture=UriToFile.getPath(context,photo)
+            Log.d("login_network", "$picture")
             val client = OkHttpClient().newBuilder().connectTimeout(3, TimeUnit.SECONDS)
                 .build()
             val mediaType: MediaType? = "text/plain".toMediaTypeOrNull()
             val body: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
                 .addFormDataPart(
-                    "userpic", "head.png",
-                    File(photo.path!!)
+                    name,
+                  picture!!.substring(photo.path!!.lastIndexOf("/") + 1, picture.length),
+                    File(picture)
                         .asRequestBody("application/octet-stream".toMediaTypeOrNull())
                 )
                 .build()
@@ -384,10 +392,7 @@ class AboutMeActivity : AppCompatActivity() {
                     runOnUiThread {
                         if (message.errorCode != 0) {
                             "修改错误！错误原因是：${message.msg}".showToast(context)
-                        } else {
-                            "提交成功！".showToast(context)
-                        }
-                        if ((message.errorCode == 0) or (message.msg == "修改成功"))
+                        } else
                             load(context)
                     }
                 }
@@ -476,6 +481,7 @@ class AboutMeActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -483,10 +489,11 @@ class AboutMeActivity : AppCompatActivity() {
             if(modePictureSelector==1){
             Account.userPhoto(selectList[0].path.toUri())
             Glide.with(AllApplication.context).load(Account.userPhoto()).into(binding.userPhotoAboutMe)
-                commitPhoto(1,AllApplication.context)
+                commitPhoto(1,this)
             }
             else
             {
+                commitPhoto(2,this)
                 Account.userBackGround(selectList[0].path.toUri())
                 Glide.with(AllApplication.context).load(Account.userBackGround()).into(binding.userPhotoBGAboutMe)
             }

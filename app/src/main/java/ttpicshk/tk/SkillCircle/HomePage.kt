@@ -1,10 +1,16 @@
 package ttpicshk.tk.SkillCircle
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
+import android.util.Log
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +20,31 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
+import okhttp3.*
 import ttpicshk.tk.SkillCircle.Frags.Frags_1_homePage
 import ttpicshk.tk.SkillCircle.Frags.Frags_2_homePage
 import ttpicshk.tk.SkillCircle.databinding.HomePageBinding
+import java.io.IOException
+import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
+
 class HomePage:AppCompatActivity() {
+
+    inner class messageJson(){
+        var msg:String=""
+        var errorCode=0
+        var data=Data()
+        //lateinit var data:List<list>
+        inner class Data{
+            lateinit var list:List<list>
+        }
+        inner class list{
+            val id = 0
+            val classname=""
+        }
+    }
 
     lateinit var binding:HomePageBinding
     lateinit var viewModel: MainViewModel
@@ -29,9 +54,6 @@ class HomePage:AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= HomePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val numberOfFrags1=2
-        val numberOfFrags2=0
 
         lifecycle.addObserver(AppObserver(lifecycle))
         viewModel=ViewModelProvider(this)[MainViewModel::class.java]
@@ -57,22 +79,78 @@ class HomePage:AppCompatActivity() {
             true
         }
 
+        getPagerTitle(this)
+    }
 
+    val handler=object:Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            val data: messageJson = msg.obj as messageJson
+            when (msg.arg1) {
+                1->{//首页拉取title
+                    if((msg.arg2==0) or (data.errorCode!=0))
+                    {
+                        "拉取首页失败！".showToast(AllApplication.context)
+                    }
+                    else{
+                        loadTitle(data)
+                    }
+                }
+            }
+        }
+    }
+
+   private fun getPagerTitle(context: Context) {
+       thread {
+           val client = OkHttpClient().newBuilder()
+               .build()
+           val request: Request = Request.Builder()
+               .url("https://ceshi.299597.xyz/api/v1/postclass")
+               .method("GET", null)
+               .build()
+
+           client.newCall(request).enqueue(object : Callback {
+               override fun onFailure(call: Call, e: IOException) {
+                   val msg=Message()
+                   msg.arg1=1
+                   msg.arg2=0
+                   msg.obj=messageJson()
+                   handler.sendMessage(msg)
+               }
+
+               override fun onResponse(call: Call, response: Response) {
+                   val data = response.body!!.string()
+                   Log.d("login_network", data)
+                   val gson = Gson()
+                   val message = gson.fromJson(data, messageJson::class.java)
+                   val msg=Message()
+                   msg.arg1=1
+                   msg.arg2=1
+                   msg.obj=message
+                   handler.sendMessage(msg)
+               }
+           })
+       }
+    }
+
+    private fun loadTitle(jsonData:messageJson){
+        binding.homePage1.visibility=View.INVISIBLE
+        binding.homePage2.visibility=View.VISIBLE
         //fragmentManager and TabLayout
         val adapterFrag=Adapter_frags_homePage(supportFragmentManager,lifecycle)
-        repeat(numberOfFrags1) {
+        repeat(jsonData.data.list.size) {
             adapterFrag.addFrag(Frags_1_homePage("$it".toInt()))
         }
-        repeat(numberOfFrags2){
+        Log.d("login_network",jsonData.msg)
+        repeat(0){
             adapterFrag.addFrag(Frags_2_homePage())
         }
 
         binding.pagerLayout.adapter=adapterFrag
         TabLayoutMediator(binding.tabLayout,binding.pagerLayout){tab,position->
-            tab.text="OBJECT ${(position+1)}"
+            tab.text= jsonData.data.list[position].classname
             tab.setIcon(R.drawable.icon_model)
         }.attach()
-        binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+        binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 recoverItemTab()
                 chooseTab(tab)
@@ -84,17 +162,10 @@ class HomePage:AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
-
-
-
     }
 
-    private fun chooseTab(tab: TabLayout.Tab?) {
-    }
-
-    private fun recoverItemTab() {
-    }
-
+    private fun chooseTab(tab: TabLayout.Tab?) {}
+    private fun recoverItemTab() {}
     override fun onResume() {
         invalidateOptionsMenu()
         binding.navView.setCheckedItem(R.id.nav_homePage)

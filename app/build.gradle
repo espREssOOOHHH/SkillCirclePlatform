@@ -38,6 +38,9 @@ android {
 }
 
 dependencies {
+    //图片轮播
+    implementation 'io.github.youth5201314:banner:2.2.2'
+    //图片选择
     implementation 'io.github.lucksiege:pictureselector:v2.7.3-rc02'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     def lifecycle_version = "2.3.1"
