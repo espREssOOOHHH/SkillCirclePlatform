@@ -58,13 +58,13 @@ class AboutMeActivity : AppCompatActivity() {
             startActivity(Intent(this, LogInActivity::class.java))
         } else {
             load(this)
+            loadImage()
         }
+
 
         setSupportActionBar(binding.toolbarAboutMe)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.collapseToolBarAboutMe.title = Account.userName()
-        Glide.with(this).load(Account.userBackGround()).into(binding.userPhotoBGAboutMe)
-        Glide.with(AllApplication.context).load(Account.userPhoto()).into(binding.userPhotoAboutMe)
         binding.userPhotoAboutMe.setOnClickListener {
             val dialog = Dialog(this)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -219,7 +219,7 @@ class AboutMeActivity : AppCompatActivity() {
         commit.setOnClickListener {
             when (type) {
                 4 -> {
-                    val selectDate:String="${datePicker.year}-${datePicker.month}-${datePicker.dayOfMonth}"
+                    val selectDate:String="${datePicker.year}-${datePicker.month+1}-${datePicker.dayOfMonth}"
                     Loading.start(this)
                     commitPersonalInfo(type, selectDate, context, dialog)
                 }
@@ -409,7 +409,10 @@ class AboutMeActivity : AppCompatActivity() {
         bindingPersonalInfo.aboutMeLocation.text=Account.location()
         bindingAccountSettings.aboutMeEmail.text=Account.email()
         bindingAccountSettings.aboutMePhone.text=Account.phone()
+        Glide.with(AllApplication.context).load(Account.userBackGround()).into(binding.userPhotoBGAboutMe)
+        Glide.with(AllApplication.context).load(Account.userPhoto()).into(binding.userPhotoAboutMe)
     }
+
 
     inner class dataJson{
         var msg:String=""
@@ -429,6 +432,7 @@ class AboutMeActivity : AppCompatActivity() {
             val birthday: String=""
             val signature:String=""
             var nickname:String? = null
+            var background:String=""
         }
     }
     inner class dataJsonS{
@@ -436,16 +440,28 @@ class AboutMeActivity : AppCompatActivity() {
         var errorCode=0
         lateinit var data:List<list>
         inner class list{
-            val id = 0
-            val user_id = 0
-            val age = 0
-            val sex = 0
-            val qg = 0//情感状况
-            val job: String?=null
-            val path: String=""//住址
-            val birthday: String=""
-            val signature:String=""
+            var id = 0
+            var user_id = 0
+            var age = 0
+            var sex = 0
+            var qg = 0//情感状况
+            var job: String?=null
+            var path: String=""//住址
+            var birthday: String=""
+            var signature:String=""
             var nickname:String? = null
+        }
+    }
+    inner class dataJsonP{
+        var msg:String=""
+        var errorCode=0
+        lateinit var data:Data
+        inner class Data{
+            lateinit var list:List
+        }
+        inner class List{
+            var userpic=""
+            var background=""
         }
     }
     fun load(context: Context,refreshDisplay:Boolean=true){
@@ -456,7 +472,6 @@ class AboutMeActivity : AppCompatActivity() {
                 .build()
             val request: Request = Request.Builder()
                 .url("https://ceshi.299597.xyz/api/v1/user/getuserinfo")
-                //.url("http://ceshi.299597.xyz/api/v1/post/339")
                 .method("GET",null)
                 .addHeader("token",Account.token)
                 .build()
@@ -475,7 +490,43 @@ class AboutMeActivity : AppCompatActivity() {
                         message.data.list[0].nickname,message.data.list[0].age,
                     message.data.list[0].sex,message.data.list[0].qg,message.data.list[0].job,
                         message.data.list[0].path,message.data.list[0].birthday,message.data.list[0].signature)
+                    Account.setPhotos(null,message.data.list[0].background)
                     if(refreshDisplay){runOnUiThread { refreshPersonalInfo() }}
+                }
+            })
+        }
+    }
+
+    fun loadImage(){
+        thread {
+
+            Log.d("login_network", "startLoadingImage")
+            val client = OkHttpClient().newBuilder()
+                .build()
+            val request: Request = Request.Builder()
+                .url("https://ceshi.299597.xyz/api/v1/user/getpic")
+                .method("GET",null)
+                .addHeader("token",Account.token)
+                .build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    val data = response.body!!.string()
+
+                    val gson = Gson()
+                    val message = gson.fromJson(data, dataJsonP::class.java)
+
+                   Account.setPhotos(message.data.list.userpic,message.data.list.background)
+
+                   runOnUiThread {
+                       if (message.errorCode != 0) {
+                           "上传错误！错误原因：${message.msg}".showToast(AllApplication.context)
+                       } else {
+                           refreshPersonalInfo()
+                       }
+                   }
                 }
             })
         }

@@ -3,6 +3,7 @@ package ttpicshk.tk.SkillCircle
 import android.net.Uri
 import android.util.JsonToken
 import android.util.Log
+import androidx.core.net.toUri
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -15,7 +16,7 @@ object Account{
     private var userId=0
     private var phoneNumber= String()
     private var isLogin=false
-    private var photoUser:Uri=Uri.parse("https://pic1.zhimg.com/v2-5ec0fb527c389530021ec2c911875165_r.jpg?source=1940ef5c")
+    private var photoUser="https://pic1.zhimg.com/v2-5ec0fb527c389530021ec2c911875165_r.jpg?source=1940ef5c"
     private var signature="誰卟媞戴着偽娤の緬具"
     private var birthday="2013-02-10"
     private var age=29
@@ -26,8 +27,15 @@ object Account{
     private var EmotionalState=0
     private var email="xxyyy@ss.com"
     private var phone="0000000000000"
-    private var photoBg:Uri=Uri.parse("https://tse4-mm.cn.bing.net/th/id/OIP.gH3rAGvlRDPBfEtlbRHVzgHaEo?w=234&h=180&c=7&o=5&dpr=2&pid=1.7")
+    private var photoBg="https://tse4-mm.cn.bing.net/th/id/OIP.gH3rAGvlRDPBfEtlbRHVzgHaEo?w=234&h=180&c=7&o=5&dpr=2&pid=1.7"
     lateinit var token: String
+
+    fun setPhotos(photo:String?,background:String?){
+        if(!photo.isNullOrEmpty()){
+            photoUser=photo
+        }
+        if(!background.isNullOrEmpty()) {photoBg=background}
+    }
 
     fun setPersonalInfo(id_:Int,userId_:Int,userName_:String?,age_:Int,sex_:Int,gq:Int,job:String?,path:String?,
     birthday_:String?,signature_:String?){
@@ -46,8 +54,8 @@ object Account{
     fun userName():String= userName
     fun userPhoto(photo:Uri?=null):Uri{
         if(photo!=null)
-            photoUser=photo
-        return photoUser
+            photoUser=photo.toString()
+        return Uri.parse(photoUser)
     }
     fun genderDigit()= gender
     fun EmotionalState()= EmotionalState
@@ -60,8 +68,8 @@ object Account{
     fun location()= location
     fun userBackGround(photo: Uri?=null):Uri{
         if(photo!=null)
-            photoBg=photo
-        return photoBg
+            photoBg= photo.toString()
+        return Uri.parse(photoBg)
     }
 
     fun gender():String{

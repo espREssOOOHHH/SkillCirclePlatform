@@ -148,7 +148,6 @@ class HomePage:AppCompatActivity() {
         binding.pagerLayout.adapter=adapterFrag
         TabLayoutMediator(binding.tabLayout,binding.pagerLayout){tab,position->
             tab.text= jsonData.data.list[position].classname
-            tab.setIcon(R.drawable.icon_model)
         }.attach()
         binding.tabLayout.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -162,6 +161,7 @@ class HomePage:AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
+        binding.tabLayout.getTabAt(1)!!.select()
     }
 
     private fun chooseTab(tab: TabLayout.Tab?) {}

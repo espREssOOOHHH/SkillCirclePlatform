@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -547,10 +548,31 @@ class LogInActivity : AppCompatActivity() {
                 return true
             }
             R.id.questionButtonToolbar->
-                "问题？".showToast(this)
+                helpVideoShow(this)
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun helpVideoShow(context:Context) {
+        val dialog= Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.dialog_video_help)
+        val video=dialog.findViewById<VideoView>(R.id.video_dialog_help)
+        val replay=dialog.findViewById<Button>(R.id.replay_dialog_help)
+        val confirm=dialog.findViewById<Button>(R.id.confirm_dialog_help)
+        val uri= Uri.parse("android.resource://$packageName/${R.raw.guide_video}")
+        video.setVideoURI(uri)
+        replay.setOnClickListener {
+            if(!video.isPlaying)
+                video.start()
+        }
+        confirm.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
     //codes about menu button
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toobar_login,menu)
