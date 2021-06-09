@@ -2,6 +2,7 @@ package ttpicshk.tk.SkillCircle
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,9 @@ class ArticleAdapter(val context:Context, private val articleList:ArrayList<Arti
         inner class ViewHolder(view:View):RecyclerView.ViewHolder(view){
             val title:TextView=view.findViewById(R.id.article_Title)
             val image_1:ImageView=view.findViewById(R.id.article_Image_1)
+            val create_time:TextView=view.findViewById(R.id.article_time)
+            val author_photo:de.hdodenhof.circleimageview.CircleImageView=view.findViewById(R.id.article_author_photo)
+            val author:TextView=view.findViewById(R.id.article_author_name)
         }
 
 
@@ -38,9 +42,14 @@ class ArticleAdapter(val context:Context, private val articleList:ArrayList<Arti
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val article=articleList[position]
         holder.title.text=article.title
+        holder.create_time.text=article.create_time
+        holder.author.text=article.authorname
+        if(article.headImage.length>1){
+            Glide.with(AllApplication.context).load(Uri.parse(article.headImage)).into(holder.author_photo)}
+
         if(article.images.size==1) {
             holder.image_1.visibility=View.VISIBLE
-            Glide.with(AllApplication.context).load(article.images[0]).into(holder.image_1)
+            Glide.with(AllApplication.context).load(Uri.parse(article.images[0])).into(holder.image_1)
         }
     }
 

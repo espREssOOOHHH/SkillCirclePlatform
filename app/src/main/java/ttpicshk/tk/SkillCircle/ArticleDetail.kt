@@ -29,7 +29,11 @@ class ArticleDetail : AppCompatActivity() {
         val imageId=intent.getSerializableExtra("IMAGES") as ArrayList<*>
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.collapseToolBar.title=title
-        Glide.with(AllApplication.context).load(imageId[0]).into(binding.headImageView)
+
+        if(!(imageId).isNullOrEmpty()){
+            Glide.with(AllApplication.context).load(Uri.parse(imageId[0] as String)).into(binding.headImageView)
+        }
+
 
         val text=intent.getStringExtra(ARTICLE_CONTENT)?:"文章文章文章\n文章文章文章\n"
         binding.articleText.text=text
